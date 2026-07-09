@@ -181,26 +181,41 @@ SETTING_RANDOM_PLAY_ORDER = true
 EXTERNAL_SCRIPT_SOURCES = {
 	CardData = {
 		tag = 'CardData',
-		url = 'https://raw.githubusercontent.com/NorDogroth/LoTR/refs/heads/main/LoTR-CardData.lua'
+		url = 'https://raw.githubusercontent.com/NorDogroth/LoTR/main/LoTR-CardData.lua'
 	},
 	GameData = {
 		tag = 'GameData',
-		url = 'https://raw.githubusercontent.com/NorDogroth/LoTR/refs/heads/main/LoTR-GameData.lua'
+		url = 'https://raw.githubusercontent.com/NorDogroth/LoTR/main/LoTR-GameData.lua'
 	},
 	Trans = {
-		tag = 'Sauron',
-		url = 'https://raw.githubusercontent.com/NorDogroth/LoTR/refs/heads/main/LoTR-Trans.lua'
+		tag = 'TransData',
+		url = 'https://raw.githubusercontent.com/NorDogroth/LoTR/main/LoTR-Trans.lua'
 	}
 }
 PENDING_EXTERNAL_SCRIPT_LOADS = 0
 
 function onLoad(saved_data)
 -- 	lua for i,obj in ipairs(gtag('fixed')) do obj.interactable = true end
+	setFixedObjectsNonInteractable()
+	setLogStyles()
+	refreshExternalScripts()
+end
+
+function setFixedObjectsNonInteractable()
 	for i,obj in ipairs(gtag('fixed')) do 
 		obj.interactable = false
 	end
-	setLogStyles()
-	refreshExternalScripts()
+	setDataObjectsNonInteractable()
+end
+
+function setDataObjectsNonInteractable()
+	local dataTags = {'CardData', 'GameData', 'TransData'}
+	for i,tag in ipairs(dataTags) do
+		local obj = gftag(tag)
+		if obj then
+			obj.interactable = false
+		end
+	end
 end
 
 function refreshExternalScripts()
@@ -227,6 +242,13 @@ function handleExternalScriptResponse(scriptName, targetTag, response)
 	else
 		targetObj.setLuaScript(response.text)
 		targetObj.reload()
+		targetObj.interactable = false
+		Wait.frames(function()
+			local reloadedObj = gftag(targetTag)
+			if reloadedObj then
+				reloadedObj.interactable = false
+			end
+		end, 2)
 		log('Externes Skript geladen: ' .. scriptName, '', 'info')
 	end
 
@@ -239,7 +261,8 @@ function handleExternalScriptResponse(scriptName, targetTag, response)
 end
 
 function continueStartup()
-	TRANS = gftag('Sauron').getTable('TRANS')
+	setFixedObjectsNonInteractable()
+	TRANS = gftag('TransData').getTable('TRANS')
 	loadData()
 --	tlCast({{'loadingMessage'}},COL_PHASE)
 	setupCardSelectors()
