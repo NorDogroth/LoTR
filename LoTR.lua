@@ -654,7 +654,7 @@ function setupCoroutine()
 
 
 	
-	setupPlayers()
+	if not setupPlayers() then return 1 end
 	for y = 1,30 do
 		coroutine.yield(0)
 	end
@@ -697,7 +697,9 @@ function setupPlayers()
 		coroutine.yield(0)
 	setupAllPlayerHeroes(pcount)
 		coroutine.yield(0)
-	setupAllPlayerDecks(pcount)
+	if not waitForPlayerDeckContainers(pcount) then return false end
+	if not setupAllPlayerDecks(pcount) then return false end
+	return true
 end
 
 function cleanSetupObjects()
@@ -786,23 +788,66 @@ function setupPlayerHeroes(pnum)
 	end
 end
 
+function waitForPlayerDeckContainers(pcount)
+	local maxWaitFrames = 600
+	local waitedFrames = 0
+	while not areAllPlayerDeckContainersReady(pcount) do
+		if waitedFrames >= maxWaitFrames then
+			local msg = 'Setup-Fehler: Deckcontainer wurden nicht rechtzeitig erzeugt.'
+			broadcastToAll(msg)
+			erlog(msg)
+			return false
+		end
+		waitedFrames = waitedFrames + 1
+		coroutine.yield(0)
+	end
+	return true
+end
+
+function areAllPlayerDeckContainersReady(pcount)
+	for pnum=1,pcount do
+		if not isPlayerDeckContainerReady(pnum) then return false end
+	end
+	return true
+end
+
+function isPlayerDeckContainerReady(pnum)
+	local playerDeck = getPlayerDeck(pnum)
+	return playerDeck != nil and playerDeck.type == 'Bag'
+end
+
 function setupAllPlayerDecks(pcount)
 	for pnum=1,pcount do
-		setupPlayerDeck(pnum)
+		if not setupPlayerDeck(pnum) then return false end
+		coroutine.yield(0)
 	end
+	return true
 end
 
 function setupPlayerDeck(pnum)
 	local selector = gftags({'DeckSelector','P'..pnum})
-	local selectedDeck = getCardsOnPile(selector)
+	local selectedDeck = selector and getCardsOnPile(selector)
+	if not selectedDeck then
+		local msg = 'Setup-Fehler: Kein ausgewähltes Spielerdeck für P' .. pnum .. ' gefunden.'
+		broadcastToAll(msg)
+		erlog(msg)
+		return false
+	end
+	local playerDeck = getPlayerDeck(pnum)
+	if not isPlayerDeckContainerReady(pnum) then
+		local msg = 'Setup-Fehler: Deckcontainer für P' .. pnum .. ' ist nicht bereit.'
+		broadcastToAll(msg)
+		erlog(msg)
+		return false
+	end
 	local objs = selectedDeck.getObjects()
 	local lastGuid = objs[#objs].guid
-	local playerDeck = getPlayerDeck(pnum)
 	selectedDeck.setRotation({0,playerDeck.getRotation()[2],180})
 	for i=1,#objs-1 do
 		playerDeck.putObject(selectedDeck.takeObject())
 	end
 	playerDeck.putObject(gguid(lastGuid))
+	return true
 end
 
 function checkAllPlayerDecks()
@@ -4467,7 +4512,7 @@ function handleEffect(card,effect,targetCard)
 		payCard(targetCard,pnum)
 	elseif id == 'play' then		-- play card from hand
 		local pnum = getPlayerOwner(targetCard)
-		if pnum == 5 and #getSauronCardsInPlay() == 8 then
+		if pnum == 5 and getFreeSauronSpaces() == 0 then
 			if effect.mustPlay then
 				local sacrifice = getWeakestSauronCard()
 				if sacrifice == card then
@@ -4564,7 +4609,7 @@ function handleEffect(card,effect,targetCard)
 		end
 	elseif id == 'rescue' then		-- return jailed card back to play or hand
 		local pnum = getPlayerOwner(targetCard)
-		if targetCard.hasTag('fromPlay') and pnum == 5 and #getSauronCardsInPlay() == 8 then
+		if targetCard.hasTag('fromPlay') and pnum == 5 and getFreeSauronSpaces() == 0 then
 			local sacrifice = getWeakestSauronCard()
 			local replaceEffect = {id='leave',wait=2}
 			addEffectToQueue(sacrifice,replaceEffect,false,1)
