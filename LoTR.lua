@@ -178,21 +178,74 @@ SETTING_RANDOM_PLAY_ORDER = true
 -- 					CH Save & Load
 ----------------------------------------------------------------------------------------------------------------------------
 
+EXTERNAL_SCRIPT_SOURCES = {
+	CardData = {
+		tag = 'CardData',
+		url = 'https://raw.githubusercontent.com/NorDogroth/LoTR/refs/heads/main/LoTR-CardData.lua'
+	},
+	GameData = {
+		tag = 'GameData',
+		url = 'https://raw.githubusercontent.com/NorDogroth/LoTR/refs/heads/main/LoTR-GameData.lua'
+	},
+	Trans = {
+		tag = 'Sauron',
+		url = 'https://raw.githubusercontent.com/NorDogroth/LoTR/refs/heads/main/LoTR-Trans.lua'
+	}
+}
+PENDING_EXTERNAL_SCRIPT_LOADS = 0
+
 function onLoad(saved_data)
-	TRANS = gftag('Sauron').getTable('TRANS')
 -- 	lua for i,obj in ipairs(gtag('fixed')) do obj.interactable = true end
 	for i,obj in ipairs(gtag('fixed')) do 
 		obj.interactable = false
 	end
 	setLogStyles()
+	refreshExternalScripts()
+end
+
+function refreshExternalScripts()
+	PENDING_EXTERNAL_SCRIPT_LOADS = 0
+	for scriptName, cfg in pairs(EXTERNAL_SCRIPT_SOURCES) do
+		PENDING_EXTERNAL_SCRIPT_LOADS = PENDING_EXTERNAL_SCRIPT_LOADS + 1
+		WebRequest.get(cfg.url, function(response)
+			handleExternalScriptResponse(scriptName, cfg.tag, response)
+		end)
+	end
+	if PENDING_EXTERNAL_SCRIPT_LOADS == 0 then
+		continueStartup()
+	end
+end
+
+function handleExternalScriptResponse(scriptName, targetTag, response)
+	local targetObj = gftag(targetTag)
+	if response.is_error then
+		log('Konnte externes Skript nicht laden (' .. scriptName .. '): ' .. response.error, '', 'error')
+	elseif response.text == nil or response.text == '' then
+		log('Leere Antwort beim Laden von ' .. scriptName .. '.', '', 'error')
+	elseif not targetObj then
+		log('Zielobjekt mit Tag ' .. targetTag .. ' für ' .. scriptName .. ' nicht gefunden.', '', 'error')
+	else
+		targetObj.setLuaScript(response.text)
+		targetObj.reload()
+		log('Externes Skript geladen: ' .. scriptName, '', 'info')
+	end
+
+	PENDING_EXTERNAL_SCRIPT_LOADS = PENDING_EXTERNAL_SCRIPT_LOADS - 1
+	if PENDING_EXTERNAL_SCRIPT_LOADS <= 0 then
+		Wait.frames(function()
+			continueStartup()
+		end, 5)
+	end
+end
+
+function continueStartup()
+	TRANS = gftag('Sauron').getTable('TRANS')
+	loadData()
 --	tlCast({{'loadingMessage'}},COL_PHASE)
-	startLuaCoroutine(Global, "loadData")
---	Wait.frames(function()
-		setupCardSelectors()
-		setupMiniatures()
-		startLuaCoroutine(Global, "initControlPanels")
-		tlCast({{'welcomeMessage'}},COL_PHASE)
---	end,30)
+	setupCardSelectors()
+	setupMiniatures()
+	startLuaCoroutine(Global, "initControlPanels")
+	tlCast({{'welcomeMessage'}},COL_PHASE)
 end
 
 function setLogStyles()
@@ -208,7 +261,7 @@ end
 function loadData()
 
 --	local timeCheck = os.clock()	log('Lade: ' .. round(os.clock()-timeCheck,3),'','time')
-	local dObj = gftag('Data')
+	local dObj = gftag('CardData')
 	HEROES = dObj.getTable('HEROES')
 	CARDS = dObj.getTable('CARDS')
 	BOSSES = dObj.getTable('BOSSES')
