@@ -2001,6 +2001,7 @@ function removeCardTokens(card)
 end
 
 function showCardTokens(card)
+	if getPhase() == 'GameEnd' then return end
 	local stance = getStance(card)
 	if stance == 'Schützen' then spawnGuardToken(card)
 	elseif stance == 'Heimlich' then spawnStealthToken(card)
@@ -5409,10 +5410,14 @@ function fixSauronCards(addnum)
 	return cards
 end
 
-function refreshSauronCardTokens()
+function removeSauronCardTokens()
 	for _,token in ipairs(gtags({'CardToken','P5'})) do
 		token.destruct()
 	end
+end
+
+function refreshSauronCardTokens()
+	removeSauronCardTokens()
 	for _,card in ipairs(getSauronCardsInPlay()) do
 		showCardTokens(card)
 	end
@@ -5636,11 +5641,18 @@ function reviveSauronTurn()
 end
 
 function removeSauronCards()
+	removeSauronCardTokens()
 	for _,card in ipairs(getSauronCardsInPlay()) do
 		hideObj(card)
 		removeCardTokens(card)
 	end
 	killAllTagsObjs({'P5','Equipment'})
+	Wait.frames(function()
+		removeSauronCardTokens()
+	end, 10)
+	Wait.frames(function()
+		removeSauronCardTokens()
+	end, 60)
 end
 ----------------------------------------------------------------------------------------------------------------------------
 -- 					CH KI Sauron
@@ -5697,7 +5709,7 @@ function calcKIPlayValue(card)
 	else
 		local fmod = hasCardKIForcePlay(card) and 5 or 0
 		local cmod = getKICtypePlayMod(card)
-		return  10 + currCost(card) + tmod + fmod
+		return  10 + currCost(card) + cmod + tmod + fmod
 	end
 	return 0
 end
@@ -5716,7 +5728,7 @@ function getKICtypePlayMod(card)
 			return getFreeSauronSpaces() > 0 and 2 or -2
 		end
 	elseif SAURON_KI == 5 then
-		if isEnemyOrDanger(card) and getFreeSauronSpaces() >= 0 then
+		if isEnemyOrDanger(card) and getFreeSauronSpaces() <= 0 then
 			return - 5
 		end
 	end
@@ -5869,7 +5881,7 @@ function calcKIMakeDamage(card,tcard,ignoreProtect)
 	if hasAttribute(tcard,'Abschirmen') and not ignoreProtect then return 0 end
 	local damage = currAttack(card)
 	if hasAttribute(tcard,'Block') and not hasAttribute(card,'Hinterhalt') then damage = damage -1 end
-	return math.min(damage,currRealHealth(tcard))
+	return math.max(0, math.min(damage,currRealHealth(tcard)))
 end
 
 -- calculate damage taken on attack
@@ -6230,8 +6242,9 @@ function addAttributeToken(card,attribute)
 end
 
 function removeAttributeToken(card,attribute)
-	local token = hasAttributeToken(card,attribute)
-	if token then token.destruct() end
+	for _,token in ipairs(gtags({'AttributeToken',attribute,'P'..getPlayerOwner(card),'C'..getCIndex(card)})) do
+		token.destruct()
+	end
 end
 
 function removeAttributeTokens(card)
