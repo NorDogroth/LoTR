@@ -5396,23 +5396,39 @@ end
 
 -- fix positions and indizes of Saurons units and equipments in play
 function fixSauronCards(addnum)
-	local cards = fixSauronCharacterIndex()
+	local cards, changed = fixSauronCharacterIndex()
 	local numCards = #cards + (addnum or 0)
 	for cnum,card in ipairs(cards) do
 		placeSauronCard(card,cnum,numCards)
 	end
+	if changed then
+		Wait.frames(function()
+			refreshSauronCardTokens()
+		end, 2)
+	end
 	return cards
+end
+
+function refreshSauronCardTokens()
+	for _,token in ipairs(gtags({'CardToken','P5'})) do
+		token.destruct()
+	end
+	for _,card in ipairs(getSauronCardsInPlay()) do
+		showCardTokens(card)
+	end
 end
 
 -- make sure that cindizes of Saurons unit cards go from 1 to x
 function fixSauronCharacterIndex()
 	local cards = table.sort(getSauronCardsInPlay(),comparePlayerCIndex)
 	local newIndexObjs = {}
+	local changed = false
 	for cindex,card in ipairs(cards) do
 		local cnum = getCIndex(card)
 		newIndexObjs[cindex] = {}
 -- 		log('Sauronindex: ' .. cindex .. ': ' .. cnum .. ' (' .. card.guid .. ')')
 		if cindex != cnum then
+			changed = true
 			log('Sauron-Indexwechsel: ' .. cnum .. ' → ' .. cindex)
 			for _,obj in ipairs(gtags({'C'..cnum,'P'..5})) do
 				obj.removeTag('C'..cnum)
@@ -5423,7 +5439,7 @@ function fixSauronCharacterIndex()
 	for cindex,objs in ipairs(newIndexObjs) do
 		for _,obj in ipairs(objs) do obj.addTag('C'..cindex) end
 	end
-	return cards
+	return cards, changed
 end
 
 
@@ -9770,17 +9786,44 @@ function showObj(obj)
 end
 
 function switchDeckTag(deck,onum,nnum)
-	local objs = deck.getObjects()	
-	local lastGuid = objs[1].guid
+	local data = deck.getData()
 	local pos = deck.getPosition()
-	for i=1,#objs-1 do
-		local obj = deck.takeObject({position=pos})
-		obj.removeTag('P'..onum)
-		obj.addTag('P'..nnum)	
+	local rot = deck.getRotation()
+
+	switchObjectDataOwner(data,onum,nnum)
+	setObjectDataTransform(data,pos,rot)
+
+	deck.destruct()
+	spawnObjectData({data=data})
+end
+
+function switchObjectDataOwner(data,onum,nnum)
+	if not data then return end
+	switchTagInObjectData(data,onum,nnum)
+	if data.ContainedObjects then
+		for _,containedData in ipairs(data.ContainedObjects) do
+			switchObjectDataOwner(containedData,onum,nnum)
+		end
 	end
-	local obj = gguid(lastGuid)
-	obj.removeTag('P'..onum)
-	obj.addTag('P'..nnum)	
+end
+
+function switchTagInObjectData(data,onum,nnum)
+	if not data.Tags then return end
+	for i,tag in ipairs(data.Tags) do
+		if tag == 'P'..onum then
+			data.Tags[i] = 'P'..nnum
+		end
+	end
+end
+
+function setObjectDataTransform(data,pos,rot)
+	data.Transform = data.Transform or {}
+	data.Transform.posX = pos[1]
+	data.Transform.posY = pos[2]
+	data.Transform.posZ = pos[3]
+	data.Transform.rotX = rot[1]
+	data.Transform.rotY = rot[2]
+	data.Transform.rotZ = rot[3]
 end
 
 function checkCardBagErrors()
