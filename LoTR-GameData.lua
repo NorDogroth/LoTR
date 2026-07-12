@@ -572,7 +572,7 @@ CAMPAIGNS = {
 			{	Missionsname = 'missionBreeTrouble3',
 				Missionsbild = 'https://i.imgur.com/VuePmKV.jpg',
 				Bedingungen = { victoryConditions={{maxMatchingPlayerHandCards=0,condition={name='Artefakt'}}} },
-				Ereignisse = { 'InnTrouble_Threat1' },
+				Ereignisse = { 'InnTrouble_Hope1', 'InnTrouble_Hope2', 'InnTrouble_Hope3', 'InnTrouble_Threat1' },
 				Start = { Objektezurückgeben=1, Unruhestifter=1, TrunkenerRaufbold={1,2} },
 				Deck = 'Gasthaus'
 			}
@@ -1590,6 +1590,12 @@ EVENTS = {
 		 hope=true, value=9, title='evHuntingArtefact', info='evHuntingArtefactInfo', targetPads={player='active'}, effect={id='addEffect',effect={tr='Gruppensterben',id='receive',name='Artefakt', delete='Ende',limit=1,triggerCondition={trait='Bandit'}}} },
 	HuntingArtefacts_Threat1 = { 
 		value=38, title='evNoRefreshResources', info='evNoRefreshResourcesInfo', targetPads={player='Sauron'}, effect={id='mod',mod='playerResourceRedutction',value=3, followingEffect={id='addEffect',effect={tr='Ende',id='mod',mod='playerResourceRedutction',value=-3, delete='Ende'}}} },
+	InnTrouble_Hope1 = {
+		hope=true, value=5, title='evInnBanditDistracted', targetPads={player='active'}, effect={id='exhaust',targeting=true,target='Gegner',targetCondition={trait='Bandit',ready=true}}, eventCondition={enemyInPlay={trait='Bandit',ready=true}}	},
+	InnTrouble_Hope2 = {
+		hope=true, value=7, title='evInnBanditDistracted', targetPads={player='active'}, effect={id='exhaust',targeting=true,target='Gegner',targetCondition={trait='Bandit',ready=true}}, eventCondition={enemyInPlay={trait='Bandit',ready=true}}	},
+	InnTrouble_Hope3 = {
+		hope=true, value=11, title='evInnDancingSong', effectTargets={ctype='Gegner'}, effect={id='exhaust',wait=1}, eventCondition={enemyInPlay={ready=true}}	},
 	InnTrouble_Threat1 = {
 		value=41, title='evInnDamage', info='damage1All', effectTargets={ctype='Charakter',damageable=true}, effect={id='damage',wait=3}	},
 	CampBreeMurder_Hope1 = {
