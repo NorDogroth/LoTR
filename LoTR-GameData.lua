@@ -679,7 +679,7 @@ CAMPAIGNS = {
 			{	Missionsname = 'missionAruwethil3',
 				Missionsbild = 'https://i.imgur.com/gBbnBnP.jpg',
 				Bedingungen = { victoryConditions={{noBossInPlay={names={'Aruwethil','AruwethilGeist'}}}} },
-				Ereignisse = { 'TheDevice_Threat1', 'TheDevice_Threat2', 'FightAruwethil_Threat1' },
+				Ereignisse = { 'FightAruwethil_Hope1', 'FightAruwethil_Hope2', 'FightAruwethil_Hope3', 'TheDevice_Threat1', 'TheDevice_Threat2', 'FightAruwethil_Threat1' },
 				Start = { Aruwethil=1, JagenderSchwarm={2,1,0}, HungrigeFledermaus={0,1,2,3}, Schattenranken=1, UnholdvonRhudaur_RhudaurRelikthüter={0,1,2} },
 				Deck = 'Fornostgruft'
 			}
@@ -1668,6 +1668,12 @@ EVENTS = {
 		hope=true, value=6, title='evTreasureChamber', info='evTreasureChamberInfo', targetPads={player='players'}, effect={id='receive',nameCondition={ctype='Verstärkung',minCost=1,unique=false}, followTarget=true,followingEffect={id='cost',value=0,overwrite=true}} },
 	TreasureChamber_Threat1 = {
 		value=42, title='evHiddenTrap', info='evHiddenTrapInfo', targetPads={player='players'}, effect={id='exhaust',randomTarget=true,target='Held', targetCondition={player='self',ready=true},tlaction='actHiddenTrap', followTarget=true,followingEffect={id='damage',value=2}} },
+	FightAruwethil_Hope1 = {
+		hope=true, value=3, title='evLightAgainstAruwethil', effectTargets={ctype='Gefahr',targetable=true}, effect={id='progress',value=2}, eventCondition={dangerInPlay={targetable=true}} },
+	FightAruwethil_Hope2 = {
+		hope=true, value=6, title='evStandTogetherAgainstAruwethil', targetPads={player='active'}, effect={id='ready',targeting=true,target='Charakter',targetCondition={canReady=true},repeatEffect=true,repeatLimit=3}, eventCondition={charInPlay={canReady=true}} },
+	FightAruwethil_Hope3 = {
+		hope=true, value=8, title='evSeeThroughAruwethil', effectTargets={name='Aruwethil'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',Block=false,delete='Ende'}}, eventCondition={bossInPlay={name='Aruwethil',attribute='Block'}}, kill={tr='Gruppenverlassen',triggerCondition={name='Aruwethil'}} },
 	FightAruwethil_Threat1 = {
 		value=37, title='evWomanAttacks', info='evDamageCharNBInfo', maxTargets=1, effectTargets={ctype='Charakter',damageable=true}, effect={id='damage',value=2,ignoreBlock=true, tlaction='actWomanAttacked'} },
 	CampConspiracy_Hope1 = {
