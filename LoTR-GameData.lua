@@ -362,7 +362,7 @@ CAMPAIGNS = {
 			{	Missionsname = 'missionDolGuldur3',
 				Missionsbild = 'https://i.imgur.com/AEjmGop.jpg',
 				Bedingungen = { victoryConditions={{maxQuestsInPlay=0}} },
-				Ereignisse = { 'DolGuldurTrap_Threat1', 'DolGuldurTrap_Threat2' },
+				Ereignisse = { 'DolGuldurTrap_Hope1', 'DolGuldurTrap_Hope2', 'DolGuldurTrap_Hope3', 'DolGuldurTrap_Threat1', 'DolGuldurTrap_Threat2' },
 				Start = { Kasernentür=1, SammelnzumAngriff=1, PlünderungdesArsenals={2,1}, Kriegstrommeln={0,1}, DolGuldurOrks={2,3,0}, EliteDolGuldurOrks={0,0,3,4} },
 				Deck = 'DolGuldur'
 			},
@@ -1396,6 +1396,12 @@ EVENTS = {
 		value=34, title='evCallDolGuldurPatrols', info='evCallDolGuldurPatrolsInfo', targetPads={player='Sauron'}, effect={tr='Sofort',id='call',name='DolGuldurPatrouille',mustCall=true, followingEffect={id='call',name='DolGuldurPatrouille'}} },
 	DolGuldurPatrol_Hope1 = { 
 		hope=true, value=5, title='evDistractPatrol', info='evDistractPatrolInfo', targetPads={player='Sauron'}, effect={tr='Sofort',id='discard',targetHand=true,targetAll=true} },
+	DolGuldurTrap_Hope1 = {
+		hope=true, value=3, title='evOrcsCollide', effectTargets={ctype='Gegner',trait='Ork',ready=true}, maxTargets=2, effect={id='exhaust',tlaction='actExhaust'}, eventCondition={enemyInPlay={trait='Ork',ready=true}} },
+	DolGuldurTrap_Hope2 = {
+		hope=true, value=6, title='evTheyCannotPass', targetPads={player='active'}, effect={id='addEffect',target='Charakter',randomTarget=true,effect={tr='Berechnung',id='bonus',w=2},repeatEffect=true,repeatValue='PlayerCount'} },
+	DolGuldurTrap_Hope3 = {
+		hope=true, value=9, title='evTemporaryBarricade', effectTargets={ctype='Charakter',ready=true,noAttribute='Block'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',Block=true,delete='Ende'}}, eventCondition={charInPlay={ready=true,noAttribute='Block'}} },
 	DolGuldurTrap_Threat1 = { 
 		value=41, title='evRestoreProgress', info='evRestoreProgressInfo', effectTargets={ctype='Quest',}, effect={tr='Sofort',id='progress',value=0,overwrite=true} },
 	DolGuldurTrap_Threat2 = { 
