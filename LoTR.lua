@@ -4671,7 +4671,9 @@ function handleEffect(card,effect,targetCard)
 		teffect.tempTarget = targetCard
 		addEffectToQueue(targetCard,teffect,false,1)
 	elseif id == 'threat' then		-- raise threat
-		local tvalue = addThreat(effect.value or 1)
+		local tvalue
+		if effect.overwrite then tvalue = addThreat((effect.value or currThreat())-currThreat(),true)
+		else tvalue = addThreat(effect.value or 1) end
 		if tvalue != 0 then
 			local tstring = tvalue > 0 and 'raisedThretdBy' or 'loweredThreatBy'
 			local cstringData = card.hasTag('Hand') and {gnote(card),'c'} or {card,'card'}
@@ -6398,13 +6400,13 @@ function setThreat(value)
 	updateEventTokens()
 end
 
-function addThreat(value)	
-	if value < 0 and MODS.blockThreatReduction > 0 then
+function addThreat(value,ignoreMods)	
+	if value < 0 and MODS.blockThreatReduction > 0 and not ignoreMods then
 		tlcast({{'cannotReduceThreat'}},COL_THREAT)
 		return 0
 	end
-	if value > 0 and gmod('addDoubleThreat') > 0 then value = 2*value end
-	if value > 0 and gmod('additionalThreat') > 0 then value = value + gmod('additionalThreat') end
+	if value > 0 and not ignoreMods and gmod('addDoubleThreat') > 0 then value = 2*value end
+	if value > 0 and not ignoreMods and gmod('additionalThreat') > 0 then value = value + gmod('additionalThreat') end
 	setThreat(value+currThreat())
 	local effects = value > 0 and EFFECT_LISTENER.Bedrohung
 		or value < 0 and EFFECT_LISTENER.Bedrohungsreduktion		-- Todo: 

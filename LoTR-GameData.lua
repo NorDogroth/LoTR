@@ -214,6 +214,10 @@
  			Deck = { EislandPatrouille=8, EislandSchlächter=5, EislandRevierhüter=7, HünenhafterOrk=4, SnagaSpäher=8, SnagaWachposten=3, SnagaVeteran=4, JägerderDämmerung=2, JagendesRudel=2, EislandWargreiter=6, KraftstrotzenderOrk=4, Frostschmelzer=4, BerserkerdesNordens=4, EislandAnstürmer=7, ZornigerWarg=3, WargdesNordens=2, WeißerWarg=4, BilwissFallensteller=4, Schneeriese=1, Troll=2, EisigerWind=3, Schneesturm=5, WenigVorräte=5, SammelnzumAngriff=5, Flankiert=5, GarstigesWetter=5, Stolperfalle=5, StreitunterFreunden=5, Umzingelt=5, NichtsalsSchnee=4, VereisteVorräte=5, BlutspurimSchnee=5, UnsichtbareAngriffe=4, RudelaufdenSpuren=3, Eissturm=2, ErbitterterAngriff=5, UnerbittlicherSturm=3, Schnapptsieeuch=2, SammelnderdunklenKräfte=2, Veteran=4, DunkleVerteidigung=3, Verzweiflung=3, VonSchattengetrieben=5, Unnachgiebig=5 } },
  		Eisverliesorks = { Boss = { 'DerGrosseFolterer1', 'DerGrosseFolterer2' },
  			Deck = { EineHordeOrks=5, KraftstrotzenderOrk=5, EislandSchlächter=3, HünenhafterOrk=5, SnagaVeteran=6, SnagaKriegshäuptling=3, BilwissMarodeure=5, OrkBestienmeister=3, Steintroll=3, BilwissHornbläser=3, Kerkerwächter=3, GrubenOrk=3, Verlies=2, Folterkammer=2, UnebenerBoden=2, SammelnzumAngriff=5, Grabesnebel=1, WachsameAugen=2, Umzingelt=1, ErbitterterAngriff=10, Grog=8, Hordenzorn=4, Hordenmasse=3, SchwacherWille=1, LähmendeAngst=1, AbgelenkterSchlag=5, Umgedreht=4, KreaturderDunkelheit=4, DunkleStacheln=5, EkelhaftesEssen=5, Unnachgiebig=4, Veteran=4, DunkleVerteidigung=3, VonSchattengetrieben=5 } },
+		Ereborstreit = { Boss = { },
+			Deck = { StörrischerÄltester=6, ZornigerSchmied=8, VerärgerterHändler=10, StreitlustigerKaufmann=10, Streithahn=8, SturerZwergenkrieger=8, MürrischerWeiser=8, StreitunterFreunden=8, Grog=6, WenigVorräte=3, WachsameAugen=2, UnterdemwachsamenAuge=2, FallendeAusrüstung=2, SchlechteNachrichten=2, SchrecklicheSchatten=2, Umgedreht=4, AbgelenkterSchlag=5, Veteran=5, DunkleVerteidigung=5, Unnachgiebig=4, Verzweiflung=3 } },
+		Ereborbelagerer = { Boss = { 'Durbnakh' },
+			Deck = { Rammbock=4, OrkArmbrustschützen=8, OrkBrandstifter=6, OrkMeute=10, OrkVerwüster=4, OrkSaboteur=4, GepanzerteOrks=7, OrkVorhut=8, GnadenloserHauptmann=5, Festungsstürmer=8, RasenderOrk=8, DurchgebrocheneOrks=3, WargReiter=6, OrkBestienmeister=4, OrkJagdhund=4, BilwissHornbläser=4, ScharfäugigerOrk=4, Kriegstrommeln=5, SammelnzumAngriff=5, Flankiert=4, Felsen=3, Felsenklippen=3, AngreifbareStelle=4, Grog=4, ErbitterterAngriff=10, SammelnderdunklenKräfte=4, AbgelenkterSchlag=4, VonSchattengetrieben=6, Verzweiflung=5, DunkleVerteidigung=5, Veteran=6, Unnachgiebig=5, EkelhaftesEssen=4 } },
 -- 		Deckname = { Boss = {  },
 -- 			Deck = {  } },
 	}
@@ -1277,7 +1281,32 @@ CAMPAIGNS = {
 				Deck = 'Eisverliesorks'
 			}
 		}
-	}
+	},
+
+	{	Name = 'campOrcSurprise', Zyklus = 'cyErebor',
+		Startereignisse = { {targetPads={player='Sauron'}, effect={id='addEffect',effect={tr='Gruppensterben',id='threat',triggerCondition={trait='Wütender Zwerg',location=1}}}} },
+		Ereignisse = { 'CampOrcSurprise_Hope1', 'CampOrcSurprise_Hope2', 'CampOrcSurprise_Hope3', 'CampOrcSurprise_Threat1' },
+		Orte = {
+			{	Missionsname = 'missionOrcSurprise1', Missionsbild = 'https://i.imgur.com/dedfMFt.png',
+				Bedingungen = { travelConditions={{noQuestInPlay={name='Streitschlichten'}}}, defeatConditions={{minThreat=40}} },
+				Ereignisse = { 'OrcSurpriseM1_Hope1', 'OrcSurpriseM1_Hope2', 'OrcSurpriseM1_Hope3', 'OrcSurpriseM1_Hope4', 'OrcSurpriseM1_Threat1' },
+				Start = { Streitschlichten=1, StörrischerÄltester=1, SturerZwergenkrieger_MürrischerWeiser={1,1,2,2}, ZornigerSchmied_Streithahn={1,2,2,2}, VerärgerterHändler_StreitlustigerKaufmann={1,1,1,2} },
+				Deck = 'Ereborstreit'
+			},
+			{	Missionsname = 'missionOrcSurprise2', Missionsbild = 'https://i.imgur.com/CSDIxmQ.png',
+				Bedingungen = { travelConditions={{noQuestInPlay={name='AnsturmderBelagerer'}}} },
+				Ereignisse = { 'OrcSurpriseM2_Hope1', 'OrcSurpriseM2_Hope2', 'OrcSurpriseM2_Threat1', 'OrcSurpriseM2_Threat2' },
+				Start = { Kriegslager=1, AnsturmderBelagerer=1, OrkVorhut=1, OrkArmbrustschützen_Festungsstürmer={1,1,2,2}, OrkMeute_OrkBrandstifter={1,2,2,3}, Kriegstrommeln={0,0,1,1} },
+				Deck = 'Ereborbelagerer'
+			},
+			{	Missionsname = 'missionOrcSurprise3', Missionsbild = 'https://i.imgur.com/5SlAHWP.png',
+				Bedingungen = { victoryConditions={{noQuestInPlay={name='Kriegslager'},noBossInPlay={de='Durbnâkh'}}} },
+				Ereignisse = { 'OrcSurpriseM3_Hope1', 'OrcSurpriseM3_Hope2', 'OrcSurpriseM3_Threat1', 'OrcSurpriseM3_Threat2', 'OrcSurpriseM3_Threat3' },
+				Start = { Durbnakh=1, WargReiter={0,1,1,1}, OrkMeute_OrkVorhut={1,1,2,2}, BilwissHornbläser_GnadenloserHauptmann={0,0,1,1} },
+				Deck = 'Ereborbelagerer'
+			}
+		}
+	},
 
 -- 	ccamp
 -- 	{	Name = 'campXXX', Zyklus = 'XXX',
@@ -2272,6 +2301,42 @@ EVENTS = {
 	IceplainMission3_Hope1 = {
 		hope=true, value=9, title='evIceplainM3Hope1',
 		effectTargets={ctype='Gegner',ready=true}, effect={id='exhaust'}, eventCondition={enemyInPlay={ready=true}} },
+	CampOrcSurprise_Hope1 = {
+		campaign=true, hope=true, value=2, title='evOrcSurpriseClearHead', targetPads={player='active'}, effect={id='threat',value=-2}, eventCondition={maxMod={'blockThreatReduction',0}} },
+	CampOrcSurprise_Hope2 = {
+		campaign=true, hope=true, value=6, title='evOrcSurpriseSupplies', targetPads={player='players'}, effect={id='heal',value=2,targeting=true,target='Charakter',targetCondition={player='self',canHeal=true}}, eventCondition={charInPlay={canHeal=true}} },
+	CampOrcSurprise_Hope3 = {
+		campaign=true, hope=true, value=10, title='evOrcSurpriseForErebor', effectTargets={ctype='Held'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',a=1,Block=true,delete='Ende'}} },
+	CampOrcSurprise_Threat1 = {
+		campaign=true, value=35, title='evOrcSurpriseUnrest', targetPads={player='players'}, effect={id='exhaust',target='Charakter',randomTarget=true,targetCondition={player='self',ready=true}} },
+	OrcSurpriseM1_Hope1 = {
+		hope=true, value=2, title='evOrcSurpriseTalkDown', targetPads={player='active'}, effect={id='exhaust',targeting=true,target='Diener',targetCondition={trait='Wütender Zwerg',ready=true}}, eventCondition={minionInPlay={trait='Wütender Zwerg',ready=true}} },
+	OrcSurpriseM1_Hope2 = {
+		hope=true, value=4, title='evOrcSurpriseGetHelp', targetPads={player='Sauron'}, effect={id='addEffect',effect={tr='Auffrischung',delete='Auffrischung',id='call',targetPads={player='players'},nameCondition={ctype='Verbündeter',unique=false}}} },
+	OrcSurpriseM1_Hope3 = {
+		hope=true, value=6, title='evOrcSurpriseTalkDown', targetPads={player='active'}, effect={id='exhaust',targeting=true,target='Diener',targetCondition={trait='Wütender Zwerg',ready=true}}, eventCondition={minionInPlay={trait='Wütender Zwerg',ready=true}} },
+	OrcSurpriseM1_Hope4 = {
+		hope=true, value=8, title='evOrcSurpriseDwarfFalls', targetPads={player='players'}, effect={id='addEffect',effect={tr='Gruppensterben',delete='Ende',limit=1,id='call',nameCondition={ctype='Verbündeter',trait='Zwerg',unique=false},targetPads={player='self'},triggerCondition={ctype='Verbündeter',player='self'}}} },
+	OrcSurpriseM1_Threat1 = {
+		value=40, title='evOrcSurpriseDwarfWar', targetPads={player='Sauron'}, effect={id='handleEffects',effects={}} },
+	OrcSurpriseM2_Hope1 = {
+		hope=true, value=5, title='evOrcSurpriseArmory', targetPads={player='players'}, effect={id='handleEffects',effects={{id='equipWithName',name='Zwergenaxt',targeting=true,target='Held',targetCondition={player='self',hasNotEquipmentTrait='Waffe'}},{id='equipWithName',name='Rundschild',targeting=true,target='Held',targetCondition={player='self',hasNotEquipmentTrait='Rüstung'}}}} },
+	OrcSurpriseM2_Hope2 = {
+		hope=true, value=9, title='evOrcSurpriseCommonEnemy', targetPads={player='players'}, effect={id='handleEffects',effects={{id='receive',nameCondition={ctype='Verbündeter',trait='Zwerg',unique=false},followTarget=true,followingEffect={id='cost',value=0,overwrite=true}},{id='receive',nameCondition={ctype='Verbündeter',trait='Zwerg',unique=false},followTarget=true,followingEffect={id='cost',value=0,overwrite=true}}}} },
+	OrcSurpriseM2_Threat1 = {
+		value=25, title='evOrcSurpriseEscalation', targetPads={player='Sauron'}, effect={id='threat',value=35,overwrite=true,effectCondition={maxThreat=34}} },
+	OrcSurpriseM2_Threat2 = {
+		value=41, title='evOrcSurpriseBreach', targetPads={player='Sauron'}, effect={id='call',names={'Festungsstürmer','OrkBrandstifter','OrkArmbrustschützen'},mustCall=true,repeatEffect=true,repeatValue='PlayerCount',maxValue=3,wait=3} },
+	OrcSurpriseM3_Hope1 = {
+		hope=true, value=7, title='evOrcSurpriseRockslide', targetPads={player='active'}, effect={id='handleEffects',targeting=true,target='Gegner',targetCondition={ready=true,damageable=true},effects={{id='exhaust'},{id='damage',sourceValue='Random',minRan=2,maxRan=3}},repeatEffect=true,repeatLimit=3}, eventCondition={enemyInPlay={ready=true,damageable=true}} },
+	OrcSurpriseM3_Hope2 = {
+		hope=true, value=11, title='evOrcSurpriseSpearTraps', targetPads={player='Sauron'}, effect={id='addEffect',effect={tr='Gruppenangriffsende',id='damage',value=3,targetTrigger=true,triggerCondition={name='Durbnakh',damageable=true}}}, eventCondition={bossInPlay={name='Durbnakh'}}, kill={tr='Gruppenverlassen',triggerCondition={name='Durbnakh'}} },
+	OrcSurpriseM3_Threat1 = {
+		value=30, title='evOrcSurpriseBarricades', effectTargets={name='Kriegslager'}, effect={id='progress',overwrite=true}, eventCondition={questInPlay={name='Kriegslager',minProgress=1}} },
+	OrcSurpriseM3_Threat2 = {
+		value=42, title='evOrcSurpriseHuntingCall', targetPads={player='Sauron'}, effect={id='addGroupEffect',target='Diener',permanent=true,effect={tr='Auffrischung',id='addEffect',addCondition={ctype='Diener'},effectCondition={bossInPlay={name='Durbnakh'}},effect={tr='Berechnung',id='bonus',h=1}}} },
+	OrcSurpriseM3_Threat3 = {
+		value=45, title='evOrcSurpriseRelentless', effectTargets={ctype='Gegner',traits={'Ork','Wolf'}}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}} },
 }
 -- ccev		
 
