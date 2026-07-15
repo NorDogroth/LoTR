@@ -3622,7 +3622,7 @@ function checkCardMatchingCondition(card,condition,scard,tcard,reverse)		-- CCM
 		or condition.maxThreatEvents and #gtag('ThreatToken') > condition.maxThreatEvents
 		or condition.maxTreachery and #getActiveTreachery() > condition.maxTreachery
 		or condition.maxWill and currWill(card) > condition.maxWill
-		or condition.maxWillMalus and (defWill(card) - currWill(card)) > condition.minWillMalus
+		or condition.maxWillMalus and (defWill(card) - currWill(card)) > condition.maxWillMalus
 		or condition.maxWillProgress and currWillProgress(card) > condition.maxWillProgress
 		or condition.mDamageable and (not damageable(card) or (hasAttribute(card,'Block') and not hasAttribute(card,'Abschirmen')))
 		or condition.minAlliesInPlay and #getAlliesInPlay() < condition.minAlliesInPlay
@@ -4056,7 +4056,7 @@ function getEffectInfo(card,effect)		-- svi
 end
 
 function getTargets(card,effect,pnum)
-	local pnum = effect.targetSauron and 5 or effect.targetCurrentPlayer and CURRENT_PLAYER or targetRandomPlayer and getRandomElement(getPlayersInGame()) or effect.targetActiveFriendlyPlayer and getActiveFriendlyPlayer() or getPlayerOwner(card)
+	local pnum = effect.targetSauron and 5 or effect.targetCurrentPlayer and CURRENT_PLAYER or effect.targetRandomPlayer and getRandomElement(getPlayersInGame()) or effect.targetActiveFriendlyPlayer and getActiveFriendlyPlayer() or getPlayerOwner(card)
 	local targets = effect.targetHand and getHandCards(pnum)
 		or effect.targetPlayerHands and getPlayerHandCards()
 		or effect.targetPads and getTargetPads(effect.targetPads,pnum)
