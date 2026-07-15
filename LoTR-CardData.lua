@@ -2338,26 +2338,6 @@ EFFECTS = {
 	RiesigerTunnelgräber = { {tr='Berechnung',id='bonus',Konter=true} },
 	RiesigerHöhlenbär = { {tr='Berechnung',id='bonus',Block=true}, {tr='Angriffsende',id='setStance',stance='Schützen',effectCondition={minHealth=1}} },
 	RiesigerHöhlenwolf = { {tr='Berechnung',id='bonus',Standhaft=true}, {tr='Ankunft',id='addGroupEffect',permanent=true, effect={tr='Berechnung',id='bonus',a=-1, code='Wolfsangst',effectCondition={maxWill=1}}}, {tr='Verlassen',id='removeGroupEffect',removeCode='Wolfsangst'} },
-	Durbnakh = {
-		{tr='Berechnung',id='bonus',Standhaft=true},
-		{tr='Angriffsende',id='ready',target='Gegner',randomTarget=true,targetCondition={traits={'Ork','Wolf'},canReady=true,excludeSource=true},effectCondition={minQuestsInPlay=1},tlaction='actReady'}
-	},
-	Krimpag = {
-		{tr='Berechnung',id='bonus',Standhaft=true},
-		{tr='Auffrischung',id='addEffect',target='Diener',targetAll=true,targetCondition={trait='Wolf',noAttribute='Standhaft'},effectCondition={minQuestsInPlay=1},effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}}
-	},
-	Thraknakh = {
-		{tr='Berechnung',id='bonus',Standhaft=true},
-		{tr='Auffrischung',id='addEffect',target='Diener',targetAll=true,targetCondition={trait='Ork',noAttribute='Standhaft'},effectCondition={minQuestsInPlay=1},effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}}
-	},
-	Grashuk = {
-		{tr='Berechnung',id='bonus',Konter=true},
-		{tr='Auffrischung',id='call',name='BilwissHornbläser',followTarget=true,followingEffect={id='addEffect',effect={tr='Berechnung',id='bonus',Block=true}}}
-	},
-	DerFelswender = {
-		{tr='Berechnung',id='bonus',Block=true},
-		{tr='Ende',id='damage',value=3,target='Charakter',randomTarget=true,targetCondition={damageable=true}}
-	},
 	DerGrossePluenderer1 = { {tr='Berechnung', id='bonus', Block=true}, {tr='Gruppenausspielen', id='addEffect', targetTrigger=true, triggerCondition={ctype='Gegner', trait='Ork'}, limit=1, effect={tr='Berechnung', id='bonus', a=1,}} },
 	DerGrossePluenderer2 = { {tr={'Auffrischung','Ankunft'}, id='setStance', stance='Schützen'}, {tr='Gruppenausspielen', id='addEffect', targetTrigger=true, triggerCondition={ctype='Gegner', trait='Ork'}, limit=1, effect={tr='Berechnung', id='bonus', a=1,}} },
 	DerGrossePluenderer3 = { {tr='Berechnung', id='bonus', Standhaft=true}, {tr='Gruppenausspielen', id='addEffect', targetTrigger=true, triggerCondition={ctype='Gegner', trait='Ork'}, limit=1, effect={tr='Berechnung', id='bonus', a=1,}} },
@@ -3373,6 +3353,26 @@ EFFECTS = {
 	BlutspurimSchnee = { {tr='Sofort',id='handleEffect',targetPads={player='players'}, effect={id='options',options={ {tr='Sofort',id='threat'}, {id='deckDiscard',info='discardAllyFromDeck',nameCondition={ctype='Verbündeter'}} }}} },
 	UnsichtbareAngriffe = { {tr='Sofort',id='addGroupEffect',permanent=true, effect={tr='Angriff',id='addEffect',code='Unsangriffe',addCondition={ctype='Gegner'}, effect={tr='Berechnung',id='bonus',Abschirmen=true,delete='Aktionsende'}}, followingEffect={id='addEffect',targetPads={player='Sauron'},effect={tr='Ende',delete='Ende',id='removeGroupEffect', target='Gegner', removeCode='Unsangriffe'}}} },
 	RudelaufdenSpuren = { {tr='Sofort',id='addEffect',targetPads={player='Sauron'}, effect={tr='Ende',delete='Ende',id='call',name='JagendesRudel',triggerCondition={minLeftHope=1}}} },
+	Durbnakh = {
+		{tr='Berechnung',id='bonus',Standhaft=true},
+		{tr='Angriffsende',id='ready',target='Gegner',randomTarget=true,targetCondition={traits={'Ork','Wolf'},canReady=true,excludeSource=true},effectCondition={minQuestsInPlay=1},tlaction='actReady'}
+	},
+	Krimpag = {
+		{tr='Berechnung',id='bonus',Standhaft=true},
+		{tr='Auffrischung',id='addEffect',target='Diener',targetAll=true,targetCondition={trait='Wolf',noAttribute='Standhaft'},effectCondition={minQuestsInPlay=1},effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}}
+	},
+	Thraknakh = {
+		{tr='Berechnung',id='bonus',Standhaft=true},
+		{tr='Auffrischung',id='addEffect',target='Diener',targetAll=true,targetCondition={trait='Ork',noAttribute='Standhaft'},effectCondition={minQuestsInPlay=1},effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}}
+	},
+	Grashuk = {
+		{tr='Berechnung',id='bonus',Konter=true},
+		{tr='Auffrischung',id='call',name='BilwissHornbläser',followTarget=true,followingEffect={id='addEffect',effect={tr='Berechnung',id='bonus',Block=true}}}
+	},
+	DerFelswender = {
+		{tr='Berechnung',id='bonus',Block=true},
+		{tr='Ende',id='damage',value=3,target='Charakter',randomTarget=true,targetCondition={damageable=true}}
+	},
 }
 function linkEffectEnd() end
 
