@@ -642,6 +642,11 @@ BOSSES = {
  	RiesigerTunnelgräber = { de='Riesiger Tunnelgräber',en="Giant Tunnel Burrower", cost=7,a=3,h={16,16,18,20},hh=4,vh=4,trait='Kreatur',ctype='Schurke',unique=true,attackAll=true},
  	RiesigerHöhlenbär = { de='Riesiger Höhlenbär',en="Giant Cave Bear", cost=7,a=3,h={12,16,20,24},hh=4,vh=4,trait='Kreatur',ctype='Schurke',unique=true},
  	RiesigerHöhlenwolf = { de='Riesiger Höhlenwolf',en="Giant Cave Wolf", cost=7,a=3,h={12,16,18,20},hh=4,vh=4,trait='Wolf',ctype='Schurke',unique=true},
+	Durbnakh = { de='Durbnâkh',cost=7,a=3,h={10,14,18,22},hh=4,vh=4,trait='Wolf',ctype='Schurke',unique=true},
+	Krimpag = { de='Krimpag',cost=7,a=3,h={10,14,18,22},hh=4,vh=4,trait='Wolf',ctype='Schurke',unique=true},
+	Thraknakh = { de='Thraknâkh',cost=7,a=3,h={10,14,18,22},hh=4,vh=4,trait='Wolf',ctype='Schurke',unique=true},
+	Grashuk = { de='Grashuk',cost=6,a=2,h={10,14,18,20},hh=4,vh=3,trait='Ork',ctype='Schurke',unique=true},
+	DerFelswender = { de='Der Felswender',en='The Rock-Hurler',cost=8,a=3,h={14,18,24,28},hh=4,vh=4,trait='Riese',ctype='Schurke',unique=true},
  	DerGrossePluenderer1 = { de='Der Große Plünderer', en="The Great Marauder", cost=6, a=2, h={9,11,12}, hh=2, trait='Ork', ctype='Schurke', unique=true },
 	DerGrossePluenderer2 = { de='Der Große Plünderer', en="The Great Marauder", cost=6, a=2, h={12,15,18}, hh=2, trait='Ork', ctype='Schurke', unique=true },
 	DerGrossePluenderer3 = { de='Der Große Plünderer', en="The Great Marauder", cost=6, a=2, h={12,15,18}, hh=2, trait='Ork', ctype='Schurke', unique=true },
@@ -2333,6 +2338,26 @@ EFFECTS = {
 	RiesigerTunnelgräber = { {tr='Berechnung',id='bonus',Konter=true} },
 	RiesigerHöhlenbär = { {tr='Berechnung',id='bonus',Block=true}, {tr='Angriffsende',id='setStance',stance='Schützen',effectCondition={minHealth=1}} },
 	RiesigerHöhlenwolf = { {tr='Berechnung',id='bonus',Standhaft=true}, {tr='Ankunft',id='addGroupEffect',permanent=true, effect={tr='Berechnung',id='bonus',a=-1, code='Wolfsangst',effectCondition={maxWill=1}}}, {tr='Verlassen',id='removeGroupEffect',removeCode='Wolfsangst'} },
+	Durbnakh = {
+		{tr='Berechnung',id='bonus',Standhaft=true},
+		{tr='Angriffsende',id='ready',target='Gegner',randomTarget=true,targetCondition={traits={'Ork','Wolf'},canReady=true,excludeSource=true},effectCondition={minQuestsInPlay=1},tlaction='actReady'}
+	},
+	Krimpag = {
+		{tr='Berechnung',id='bonus',Standhaft=true},
+		{tr='Auffrischung',id='addEffect',target='Diener',targetAll=true,targetCondition={trait='Wolf',noAttribute='Standhaft'},effectCondition={minQuestsInPlay=1},effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}}
+	},
+	Thraknakh = {
+		{tr='Berechnung',id='bonus',Standhaft=true},
+		{tr='Auffrischung',id='addEffect',target='Diener',targetAll=true,targetCondition={trait='Ork',noAttribute='Standhaft'},effectCondition={minQuestsInPlay=1},effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}}
+	},
+	Grashuk = {
+		{tr='Berechnung',id='bonus',Konter=true},
+		{tr='Auffrischung',id='call',name='BilwissHornbläser',followTarget=true,followingEffect={id='addEffect',effect={tr='Berechnung',id='bonus',Block=true}}}
+	},
+	DerFelswender = {
+		{tr='Berechnung',id='bonus',Block=true},
+		{tr='Ende',id='damage',value=3,target='Charakter',randomTarget=true,targetCondition={damageable=true}}
+	},
 	DerGrossePluenderer1 = { {tr='Berechnung', id='bonus', Block=true}, {tr='Gruppenausspielen', id='addEffect', targetTrigger=true, triggerCondition={ctype='Gegner', trait='Ork'}, limit=1, effect={tr='Berechnung', id='bonus', a=1,}} },
 	DerGrossePluenderer2 = { {tr={'Auffrischung','Ankunft'}, id='setStance', stance='Schützen'}, {tr='Gruppenausspielen', id='addEffect', targetTrigger=true, triggerCondition={ctype='Gegner', trait='Ork'}, limit=1, effect={tr='Berechnung', id='bonus', a=1,}} },
 	DerGrossePluenderer3 = { {tr='Berechnung', id='bonus', Standhaft=true}, {tr='Gruppenausspielen', id='addEffect', targetTrigger=true, triggerCondition={ctype='Gegner', trait='Ork'}, limit=1, effect={tr='Berechnung', id='bonus', a=1,}} },
