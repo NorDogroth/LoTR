@@ -1537,6 +1537,9 @@ OBJECTIVES = {
  	AnsturmderHorde = {de='Ansturm der Horde',en="Assault of the Horde", cost=0,w={20,30,36,40},vw=2,ctype='Quest'},
 -- 	XXX = {de='XX',en="YY", cost=0,w={},ctype='Quest'},
 -- 	XXX = {de='XX',en="YY",cost=,w=3,hw=2,ctype='Gefahr'},
+	Streitschlichten = {de='Streit schlichten',en='Settle the Dispute',cost=0,w={13,15,18,20},vw=2,ctype='Quest'},
+	Kriegslager = {de='Kriegslager',en='War Camp',cost=0,w={24,30,36,40},hw=2,vw=4,ctype='Quest'},
+	AnsturmderBelagerer = {de='Ansturm der Belagerer',en='Onslaught of the Besiegers',cost=0,w=2,vw=1,ctype='Quest'},
 }
 
 function linkShadows() end
@@ -2345,6 +2348,12 @@ EFFECTS = {
     targetCondition={exhausted=true,damageable=true}} },
 	DerGrosseFolterer2 = { {tr='Bedrohung', id='damage', randomTarget=true, target='Held',
     targetCondition={exhausted=true,damageable=true}} },
+	Durbnakh = { {tr='Berechnung',id='bonus',Standhaft=true}, {tr='Angriffsende',id='ready',target='Gegner',randomTarget=true,targetCondition={traits={'Ork','Wolf'},canReady=true,excludeSource=true},effectCondition={minQuestsInPlay=1},tlaction='actReady'} },
+	Krimpag = { {tr='Berechnung',id='bonus',Standhaft=true}, {tr='Auffrischung',id='addEffect',target='Diener',targetAll=true,targetCondition={trait='Wolf',noAttribute='Standhaft'},effectCondition={minQuestsInPlay=1},effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}} },
+	Thraknakh = { {tr='Berechnung',id='bonus',Standhaft=true}, {tr='Auffrischung',id='addEffect',target='Diener',targetAll=true,targetCondition={trait='Ork',noAttribute='Standhaft'},effectCondition={minQuestsInPlay=1},effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}} },
+	Grashuk = { {tr='Berechnung',id='bonus',Konter=true}, {tr='Auffrischung',id='call',name='BilwissHornbläser',followTarget=true,followingEffect={id='addEffect',effect={tr='Berechnung',id='bonus',Block=true}}} },
+	DerFelswender = { {tr='Berechnung',id='bonus',Block=true}, {tr='Ende',id='damage',value=3,target='Charakter',randomTarget=true,targetCondition={damageable=true}} },
+
 -- 	DIENER
 	VerwirrenderSchatten = { {tr={'Auffrischung','Ankunft'},id='setStance',stance='Schützen'}, {tr='Auffrischung',id='threat'} },
 	DolGuldurBogenschütze = { {tr='Berechnung',id='bonus',Fernkampf=true} },
@@ -3176,6 +3185,10 @@ EFFECTS = {
 	ÜberfallenesLager = { {tr='Berechnung',id='bonus',Gesperrt=true,effectCondition={enemyInPlay={ready=true,trait='Ork'}}}, {tr={'Gruppenerschöpfen','Gruppenankunft','Gruppenverlassen','Auffrischung'},id='calculate'}, {tr='Verlassen',id='call', names={'SpurenimSchnee1', 'SpurenimSchnee2'},mustCall=true} },
 	GefangeneZwerge = { {tr='Gruppenausspielen',id='threat',triggerCondition={ctype='Gegner'}}, {tr='Rache',id='receive',nameCondition={trait='Zwerg',ctype='Verbündeter',unique=false}, targetPads={player='players'},followTarget=true,followingEffect={id='cost',overwrite=true,value=0}} },
 	AnsturmderHorde = { {tr='Berechnung',id='bonus',Schlacht=true}, {tr='Angegangenende',id='ready', target='Gegner',targetAll=true,targetCondition={trait='Ork',canReady=true}}, {tr='Auffrischung',id='call',group='Hordenorks',repeatEffect=true,repeatValue='PlayerCount'} },
+	Streitschlichten = { {tr='Berechnung',id='bonus',Gesperrt=true,effectCondition={enemyInPlay={trait='Wütender Zwerg',ready=true}}}, {tr={'Gruppenerschöpfen','Gruppenerbereitmachen','Gruppenankunft','Gruppenverlassen'},id='calculate',triggerCondition={trait='Wütender Zwerg'}}, {tr='Auffrischung',id='calculate'} },
+	Kriegslager = { {tr='Berechnung',id='bonus',Schlacht=true,Verfolgung=true}, {tr='Auffrischung',id='cost',value=-1,targetHand=true,targetSauron=true,targetAll=true,targetCondition={ctype='Diener',minCost=1}} },
+	AnsturmderBelagerer = { {tr='Berechnung',id='bonus',Gesperrt=true,Zeitbeschränkt=true}, {tr='Ankunft',id='addGroupEffect',target='Quest',permanent=true,effect={tr='Berechnung',id='bonus',Gesperrt=true,code='AnsturmderBelagerer',addCondition={name='Kriegslager'}}}, {tr='Verlassen',id='removeGroupEffect',target='Quest',targetCondition={name='Kriegslager'},removeCode='AnsturmderBelagerer'} },
+
 	-- SCHATTENKARTEN
 	VonSchattengetrieben = { {tr='Berechnung',id='bonus',a=2,code='Schattengetrieben'} },
 	Verzweiflung = { {tr='Abwehrende',id='threat',code='Verzweiflung'} },
@@ -3353,26 +3366,6 @@ EFFECTS = {
 	BlutspurimSchnee = { {tr='Sofort',id='handleEffect',targetPads={player='players'}, effect={id='options',options={ {tr='Sofort',id='threat'}, {id='deckDiscard',info='discardAllyFromDeck',nameCondition={ctype='Verbündeter'}} }}} },
 	UnsichtbareAngriffe = { {tr='Sofort',id='addGroupEffect',permanent=true, effect={tr='Angriff',id='addEffect',code='Unsangriffe',addCondition={ctype='Gegner'}, effect={tr='Berechnung',id='bonus',Abschirmen=true,delete='Aktionsende'}}, followingEffect={id='addEffect',targetPads={player='Sauron'},effect={tr='Ende',delete='Ende',id='removeGroupEffect', target='Gegner', removeCode='Unsangriffe'}}} },
 	RudelaufdenSpuren = { {tr='Sofort',id='addEffect',targetPads={player='Sauron'}, effect={tr='Ende',delete='Ende',id='call',name='JagendesRudel',triggerCondition={minLeftHope=1}}} },
-	Durbnakh = {
-		{tr='Berechnung',id='bonus',Standhaft=true},
-		{tr='Angriffsende',id='ready',target='Gegner',randomTarget=true,targetCondition={traits={'Ork','Wolf'},canReady=true,excludeSource=true},effectCondition={minQuestsInPlay=1},tlaction='actReady'}
-	},
-	Krimpag = {
-		{tr='Berechnung',id='bonus',Standhaft=true},
-		{tr='Auffrischung',id='addEffect',target='Diener',targetAll=true,targetCondition={trait='Wolf',noAttribute='Standhaft'},effectCondition={minQuestsInPlay=1},effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}}
-	},
-	Thraknakh = {
-		{tr='Berechnung',id='bonus',Standhaft=true},
-		{tr='Auffrischung',id='addEffect',target='Diener',targetAll=true,targetCondition={trait='Ork',noAttribute='Standhaft'},effectCondition={minQuestsInPlay=1},effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}}
-	},
-	Grashuk = {
-		{tr='Berechnung',id='bonus',Konter=true},
-		{tr='Auffrischung',id='call',name='BilwissHornbläser',followTarget=true,followingEffect={id='addEffect',effect={tr='Berechnung',id='bonus',Block=true}}}
-	},
-	DerFelswender = {
-		{tr='Berechnung',id='bonus',Block=true},
-		{tr='Ende',id='damage',value=3,target='Charakter',randomTarget=true,targetCondition={damageable=true}}
-	},
 }
 function linkEffectEnd() end
 
