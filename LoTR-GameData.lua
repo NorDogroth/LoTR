@@ -1302,7 +1302,7 @@ CAMPAIGNS = {
 			{	Missionsname = 'missionOrcSurprise3', Missionsbild = 'https://i.imgur.com/5SlAHWP.png',
 				Bedingungen = { victoryConditions={{noQuestInPlay={name='Kriegslager'},noBossInPlay={de='Durbnâkh'}}} },
 				Ereignisse = { 'OrcSurpriseM3_Hope1', 'OrcSurpriseM3_Hope2', 'OrcSurpriseM3_Hope3', 'OrcSurpriseM3_Threat1', 'OrcSurpriseM3_Threat2', 'OrcSurpriseM3_Threat3' },
-				Start = { Durbnakh=1, WargReiter={0,1,1,1}, OrkMeute_OrkVorhut={1,1,2,2}, BilwissHornbläser_GnadenloserHauptmann={0,0,1,1} },
+				Start = { Durbnakh=1, WargReiter={1,2,2,2}, OrkMeute_OrkVorhut={1,1,2,2}, BilwissHornbläser_GnadenloserHauptmann={1,1,2,2} },
 				Deck = 'Ereborbelagerer'
 			}
 		}

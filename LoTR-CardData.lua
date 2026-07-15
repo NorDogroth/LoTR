@@ -1536,7 +1536,7 @@ OBJECTIVES = {
  	GefangeneZwerge = {de='Gefangene Zwerge',en="Captured Dwarves", cost=0,w={10,12,16},vw=2,ctype='Quest'},
  	AnsturmderHorde = {de='Ansturm der Horde',en="Assault of the Horde", cost=0,w={20,30,36,40},vw=2,ctype='Quest'},
 	Streitschlichten = {de='Streit schlichten',en='Settle the Dispute',cost=0,w={13,15,18,20},vw=2,ctype='Quest'},
-	Kriegslager = {de='Kriegslager',en='War Camp',cost=0,w={24,30,36,40},hw=2,vw=4,ctype='Quest'},
+	Kriegslager = {de='Kriegslager',en='War Camp',cost=0,w={30,34,40,44},hw=2,vw=4,ctype='Quest'},
 	AnsturmderBelagerer = {de='Ansturm der Belagerer',en='Onslaught of the Besiegers',cost=0,w=2,vw=1,ctype='Quest'},
 -- 	XXX = {de='XX',en="YY", cost=0,w={},ctype='Quest'},
 -- 	XXX = {de='XX',en="YY",cost=,w=3,hw=2,ctype='Gefahr'},
