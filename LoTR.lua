@@ -103,7 +103,7 @@ MINIATURE_COL_DIF = 1.6
 MINIATURE_ROTATION = {0,90,0}
 MINIATURE_SCALE = {0.75, 1, 0.75}
 MINIATURE_MAX = 37
-MINIATUR_GEN_WAIT = 0.2
+MINIATURE_GEN_WAIT = 0.2
 HERO_POS_X = -31.5
 HERO_POS_Y = -31.5
 HERO_POS_X_DIF = 6
@@ -1345,7 +1345,7 @@ function selectSelector(selector,selected,pcolor,name)
 end
 
 function setupMiniatures()
-	local playerCards = gtags({'Miniatur','PlayerDeck'})
+	local playerCards = gtags({'Miniature','PlayerDeck'})
 	for _,card in ipairs(playerCards) do
 		addMiniatureButton(card)
 	end
@@ -1353,7 +1353,7 @@ end
 
 -- create Buttons for deck selection
 function addMiniatureButton(card)
-	local params = { scale = {1,1,1}, width = 500, height = 500, position = {0,1.2,-0.4}, font_size=500, label = '+', tooltip = tldata({{'addMiniatureToDeck'}},''), click_function = 'onMiniaturClicked',  color = {0.7,0.7,0.7,0.6} }
+	local params = { scale = {1,1,1}, width = 500, height = 500, position = {0,1.2,-0.4}, font_size=500, label = '+', tooltip = tldata({{'addMiniatureToDeck'}},''), click_function = 'onMiniatureClicked',  color = {0.7,0.7,0.7,0.6} }
 	card.clearButtons()
 	card.createButton(params)
 end
@@ -1395,12 +1395,12 @@ end
 function makeMiniatureNormal(card)
 	card.setLock(false)
 	card.clearButtons()
-	card.removeTag('Miniatur')
+	card.removeTag('Miniature')
 	card.setScale({1.4,1,1.4})
 end
 
 function makeCardMiniature(card)
-	card.addTag('Miniatur')
+	card.addTag('Miniature')
 	card.setScale(MINIATURE_SCALE)
 	addMiniatureButton(card)
 	Wait.frames(|| card.setLock(true),60)
@@ -1408,7 +1408,7 @@ end
 
 function addMiniaturesToBag()
 	local bag =  gtag('PlayerCardsBag')[1]
-	local miniatures = gtag('Miniatur')
+	local miniatures = gtag('Miniature')
 	for _,card in ipairs(miniatures) do
 		makeMiniatureNormal(card)
 		bag.putObject(card)
@@ -1436,13 +1436,13 @@ function createMiniatures()
 			Wait.frames(function()
 				local card = cloneFromContainer(bag,objRef.guid,pos,MINIATURE_ROTATION)
 				makeCardMiniature(card)
-				end,MINIATUR_GEN_WAIT*x)
+				end,MINIATURE_GEN_WAIT*x)
 		end
 	end
 end
 
 function killMiniatures()
-	killTagObjs('Miniatur')
+	killTagObjs('Miniature')
 end
 ----------------------------------------------------------------------------------------------------------------------------
 -- 					CH Hero Chips
@@ -1647,8 +1647,8 @@ function addCardToDeckSelection(card,pnum)
 	return card
 end
 
--- add selected miniatur card to deck selector
-function addMiniaturToDeckSelection(card,pnum)
+-- add selected miniature card to deck selector
+function addMiniatureToDeckSelection(card,pnum)
 	local card = addCardToDeckSelection(card,pnum)
 	makeMiniatureNormal(card)
 end
@@ -1820,7 +1820,7 @@ function listSelectorGuids()
 		local cards = getCardsOnPile(selector)
 		SELECTOR_GUIDS[gnote(cards)] = selector.guid
 	end
-	for i,card in ipairs(gtag('Miniatur')) do
+	for i,card in ipairs(gtag('Miniature')) do
 		SELECTOR_GUIDS[gnote(card)] = card.guid
 	end
 end
@@ -1837,7 +1837,7 @@ function selectHeroByName(name,pnum)
 	end
 end
 
-function getMiniaturByName(name)
+function getMiniatureByName(name)
 	if isEmpty(SELECTOR_GUIDS) then listSelectorGuids() end
 	return gguid(SELECTOR_GUIDS[name])
 end
@@ -8561,12 +8561,12 @@ function onSelectorClicked(selector,pcolor,alt)
 	updateHeroSelection(selector,not selector.hasTag('selected'),pcolor,gnote(card))
 end
 
-function onMiniaturClicked(card,pcolor,alt)
+function onMiniatureClicked(card,pcolor,alt)
 	local pnum = getPlayerNum(pcolor)
 	if getData(card).forbidden then return sendError({{"erForbiddenCard"},{card,'card'}},pcolor) end
 	if checkCardSymbolConditions(card,pnum) then
 		tlCastToPlayer({{card,'card'},{'addedToDeck'}},pcolor)
-		addMiniaturToDeckSelection(card,pnum)
+		addMiniatureToDeckSelection(card,pnum)
 	else sendError({{"erMissingHeroSymbols"}},pcolor) return
 	end
 end
