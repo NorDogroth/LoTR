@@ -221,9 +221,9 @@
 		GraueBergeSpur = { Boss = { },
 			Deck = { BilwissSpäher=8, StreifenderBilwiss=8, BilwissSpurenleser=6, BilwissNachzügler=5, GundabadBogenschütze=4, BilwissPeiniger=4, Orkspion=4, BilwissSammler=3, Krähenschwarm=3, WenigVorräte=4, GarstigesWetter=4, UnebenerBoden=4, Felsenklippen=3, DunkleWolken=3, ImSchattenderBerge=2, AngreifbareStelle=2, Lawine=2, Felssturz=2, Geschwächt=2, Erschöpfung=2 } },
 		GraueBergeTrollwacht = { Boss = { 'Grashuk' },
-			Deck = { GundabadWächter=6, GundabadBogenschütze=5, GundabadScharmützler=5, BilwissPeiniger=4, BilwissSammler=3, BilwissMarodeure=3, BilwissHornbläser=2, OrkMeute=4, WildeTrollbrut=8, GrausamerBergtroll=4, UnbarmherzigerHügeltroll=4, SteintrollaufFuttersuche=2, Felsenklippen=3, UnebenerBoden=3, ImSchattenderBerge=3, WenigVorräte=3, GarstigesWetter=3, DunkleWolken=2, AngreifbareStelle=2, Felssturz=1, Veteran=3, DunkleVerteidigung=3, Unnachgiebig=2 } },
+			Deck = { GundabadWächter=6, GundabadBogenschütze=5, GundabadScharmützler=5, BilwissPeiniger=4, BilwissSammler=3, BilwissMarodeure=3, BilwissHornbläser=2, OrkMeute=4, WildeTrollbrut=12, GrausamerBergtroll=5, UnbarmherzigerHügeltroll=5, SteintrollaufFuttersuche=2, Felsenklippen=3, UnebenerBoden=3, ImSchattenderBerge=3, WenigVorräte=3, GarstigesWetter=3, DunkleWolken=2, AngreifbareStelle=2, Felssturz=1, Veteran=3, DunkleVerteidigung=3, Unnachgiebig=2 } },
 		GraueBergePass = { Boss = { 'DerFelswender' },
-			Deck = { GrauerBergriese=8, KaltfelsenRiese=6, Schneeriese=3, Felsenklippen=4, Felssturz=4, Lawine=3, UnebenerBoden=4, ImSchattenderBerge=4, UngeschützterKamm=3, GeschütztesTal=2, WenigVorräte=3, GarstigesWetter=3, DunkleWolken=3, AngreifbareStelle=3, Erschöpfung=3, Geschwächt=3, Veteran=3, Unnachgiebig=3, DunkleVerteidigung=4 } },
+			Deck = { GrauerBergriese=8, KaltfelsenRiese=6, Schneeriese=3, BilwissimWolfspelz=5, Felsenklippen=4, Felssturz=4, Lawine=3, UnebenerBoden=4, ImSchattenderBerge=4, UngeschützterKamm=3, GeschütztesTal=2, WenigVorräte=3, GarstigesWetter=3, DunkleWolken=3, AngreifbareStelle=3, Erschöpfung=3, Geschwächt=3, Veteran=3, Unnachgiebig=3, DunkleVerteidigung=4 } },
 -- 		Deckname = { Boss = {  },
 -- 			Deck = {  } },
 	}
@@ -1321,19 +1321,19 @@ CAMPAIGNS = {
 			{	Missionsname = 'missionGreyMountains1', Missionsbild = 'https://i.imgur.com/46zQ9Sw.png',
 				Bedingungen = { travelConditions={{maxQuestsInPlay=0}} },
 				Ereignisse = { 'GreyMountainsM1_Hope1', 'GreyMountainsM1_Hope2', 'GreyMountainsM1_Hope3', 'GreyMountainsM1_Threat1', 'GreyMountainsM1_Threat2' },
-				Start = { SpurinsGebirge=1, BilwissSpäher_StreifenderBilwiss={1,2,2,3}, BilwissSpurenleser={0,1,1,1}, BilwissNachzügler_GundabadBogenschütze={0,1,1,2} },
+				Start = { SpurinsGebirge=1, BilwissNachzügler=1, BilwissSpäher_StreifenderBilwiss={1,2,2,3}, BilwissSpurenleser={0,1,1,1}, BilwissNachzügler_GundabadBogenschütze={0,1,1,2} },
 				Deck = 'GraueBergeSpur'
 			},
 			{	Missionsname = 'missionGreyMountains2', Missionsbild = 'https://i.imgur.com/rjecknH.png',
 				Bedingungen = { travelConditions={{maxQuestsInPlay=0,noBossInPlay={name='Grashuk'},noEnemyInPlay={trait='Troll'}}} },
 				Ereignisse = { 'GreyMountainsM2_Hope1', 'GreyMountainsM2_Hope2', 'GreyMountainsM2_Hope3', 'GreyMountainsM2_Threat1' },
-				Start = { Trolltrubel=1, Grashuk=1, GundabadWächter={1,1,1,2}, WildeTrollbrut={0,1,1,2}, GundabadBogenschütze={0,0,1,1} },
+				Start = { Trolltrubel=1, Grashuk=1, GundabadWächter={1,1,1,2}, WildeTrollbrut={1,2,2,3}, GundabadBogenschütze={0,0,1,1} },
 				Deck = 'GraueBergeTrollwacht'
 			},
 			{	Missionsname = 'missionGreyMountains3', Missionsbild = 'https://i.imgur.com/iJWW27E.png',
 				Bedingungen = { victoryConditions={{maxQuestsInPlay=0,noBossInPlay={name='DerFelswender'}}} },
 				Ereignisse = { 'GreyMountainsM3_Hope1', 'GreyMountainsM3_Hope2', 'GreyMountainsM3_Hope3', 'GreyMountainsM3_Threat1', 'GreyMountainsM3_Threat2', 'GreyMountainsM3_Threat3' },
-				Start = { BeseitigedasGeröll=1, DerFelswender=1, GrauerBergriese={0,1,1,2}, KaltfelsenRiese={0,0,1,1}, UngeschützterKamm={0,1,1,1} },
+				Start = { BeseitigedasGeröll=1, DerFelswender=1, GrauerBergriese={1,2,2,3}, KaltfelsenRiese={0,0,1,1}, UngeschützterKamm={0,1,1,1} },
 				Deck = 'GraueBergePass'
 			}
 		}
@@ -2391,7 +2391,7 @@ EVENTS = {
 	GreyMountainsM1_Threat2 = {
 		value=42, title='evGreyMountainsTrailFades', effectTargets={name='SpurinsGebirge'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',w=1,repeatValue='PlayerCount'}}, eventCondition={questInPlay={name='SpurinsGebirge'}}, kill={tr='Gruppenverlassen',triggerCondition={name='SpurinsGebirge'}} },
 	GreyMountainsM2_Hope1 = {
-		hope=true, value=4, title='evGreyMountainsTrollQuarrel', effectTargets={name='Trolltrubel'}, effect={id='progress',sourceValue='PlayerCount'}, eventCondition={questInPlay={name='Trolltrubel'}}, kill={tr='Gruppenverlassen',triggerCondition={name='Trolltrubel'}} },
+		hope=true, value=2, title='evGreyMountainsTrollQuarrel', effectTargets={name='Trolltrubel'}, effect={id='progress',sourceValue='PlayerCount'}, eventCondition={questInPlay={name='Trolltrubel'}}, kill={tr='Gruppenverlassen',triggerCondition={name='Trolltrubel'}} },
 	GreyMountainsM2_Hope2 = {
 		hope=true, value=6, title='evGreyMountainsSilentHorn', targetPads={player='active'}, effect={id='damage',value=3,ignoreBlock=true,targeting=true,target='Gegner',targetCondition={name='BilwissHornbläser',damageable=true}}, eventCondition={enemyInPlay={name='BilwissHornbläser',damageable=true}} },
 	GreyMountainsM2_Hope3 = {

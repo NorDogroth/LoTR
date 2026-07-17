@@ -2128,7 +2128,7 @@ function showCardCopy(ocard,pnum)
 	card.setLock(true)
 	card.interactable = false
 	showObjOnly(card,getPlayerColor(pnum))
-	Wait.frames(|| disappearLoop(card),220)
+	Wait.frames(|| disappearLoop(card),cardHasCtype(ocard,'SEreignis') and 440 or 220)
 end
 
 function jailCard(card)
@@ -3103,7 +3103,7 @@ function onEventPlayed(card,pnum)
 	if pnum == 5 then
 		if gmod('blockSauronEvent') > 0 then
 			tlCast({ {card,'card'},{'blockedOnPlay'} })
-			addEffectToQueue(card,{id='pay',wait=8})
+			addEffectToQueue(card,{id='pay',wait=16})
 			addEffectToQueue(card,{id='discard'})
 			addEffectsToQueue(effectPairs)
 			triggerGroupListener(card,'Ausspielversuch')
@@ -3132,7 +3132,7 @@ function onEventPlayed(card,pnum)
 			table.insert(effectPairs,{card,effect})
 		end
 	end
-	table.insert(effectPairs,{card,{id='pay',wait=14}})
+	table.insert(effectPairs,{card,{id='pay',wait=pnum == 5 and 28 or 14}})
 	table.insert(effectPairs,{card,{id='discard'}})
 	addEffectsToQueue(effectPairs)
 	onCardPlayed(card,pnum)
