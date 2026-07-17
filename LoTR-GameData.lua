@@ -218,6 +218,12 @@
 			Deck = { StörrischerÄltester=6, ZornigerSchmied=8, VerärgerterHändler=10, StreitlustigerKaufmann=10, Streithahn=8, SturerZwergenkrieger=8, MürrischerWeiser=8, StreitunterFreunden=8, Grog=6, WenigVorräte=3, WachsameAugen=2, UnterdemwachsamenAuge=2, FallendeAusrüstung=2, SchlechteNachrichten=2, SchrecklicheSchatten=2, AbgelenkterSchlag=5, Veteran=5, DunkleVerteidigung=5, Unnachgiebig=4, Verzweiflung=3 } },
 		Ereborbelagerer = { Boss = { 'Durbnakh' },
 			Deck = { Rammbock=4, OrkArmbrustschützen=8, OrkBrandstifter=6, OrkMeute=10, OrkVerwüster=4, OrkSaboteur=4, GepanzerteOrks=7, OrkVorhut=8, GnadenloserHauptmann=5, Festungsstürmer=8, RasenderOrk=8, DurchgebrocheneOrks=3, WargReiter=6, OrkBestienmeister=4, OrkJagdhund=4, BilwissHornbläser=4, ScharfäugigerOrk=4, Kriegstrommeln=5, SammelnzumAngriff=5, Flankiert=4, Felsen=3, Felsenklippen=3, AngreifbareStelle=4, Grog=4, ErbitterterAngriff=10, SammelnderdunklenKräfte=4, AbgelenkterSchlag=4, VonSchattengetrieben=6, Verzweiflung=5, DunkleVerteidigung=5, Veteran=6, Unnachgiebig=5, EkelhaftesEssen=4 } },
+		GraueBergeSpur = { Boss = { },
+			Deck = { BilwissSpäher=8, StreifenderBilwiss=8, BilwissSpurenleser=6, BilwissNachzügler=5, GundabadBogenschütze=4, BilwissPeiniger=4, Orkspion=4, BilwissSammler=3, Krähenschwarm=3, WenigVorräte=4, GarstigesWetter=4, UnebenerBoden=4, Felsenklippen=3, DunkleWolken=3, ImSchattenderBerge=2, AngreifbareStelle=2, Lawine=2, Felssturz=2, Geschwächt=2, Erschöpfung=2 } },
+		GraueBergeTrollwacht = { Boss = { 'Grashuk' },
+			Deck = { GundabadWächter=6, GundabadBogenschütze=5, GundabadScharmützler=5, BilwissPeiniger=4, BilwissSammler=3, BilwissMarodeure=3, BilwissHornbläser=2, OrkMeute=4, WildeTrollbrut=8, GrausamerBergtroll=4, UnbarmherzigerHügeltroll=4, SteintrollaufFuttersuche=2, Felsenklippen=3, UnebenerBoden=3, ImSchattenderBerge=3, WenigVorräte=3, GarstigesWetter=3, DunkleWolken=2, AngreifbareStelle=2, Felssturz=1, Veteran=3, DunkleVerteidigung=3, Unnachgiebig=2 } },
+		GraueBergePass = { Boss = { 'DerFelswender' },
+			Deck = { GrauerBergriese=8, KaltfelsenRiese=6, Schneeriese=3, Felsenklippen=4, Felssturz=4, Lawine=3, UnebenerBoden=4, ImSchattenderBerge=4, UngeschützterKamm=3, GeschütztesTal=2, WenigVorräte=3, GarstigesWetter=3, DunkleWolken=3, AngreifbareStelle=3, Erschöpfung=3, Geschwächt=3, Veteran=3, Unnachgiebig=3, DunkleVerteidigung=4 } },
 -- 		Deckname = { Boss = {  },
 -- 			Deck = {  } },
 	}
@@ -1308,6 +1314,31 @@ CAMPAIGNS = {
 		}
 	},
 
+	{	Name = 'campGreyMountains', Zyklus = 'cyErebor',
+		Startereignisse = { },
+		Ereignisse = { 'CampGreyMountains_Hope1', 'CampGreyMountains_Hope2', 'CampGreyMountains_Hope3', 'CampGreyMountains_Threat1', 'CampGreyMountains_Threat2', 'CampGreyMountains_Threat3' },
+		Orte = {
+			{	Missionsname = 'missionGreyMountains1', Missionsbild = 'https://i.imgur.com/46zQ9Sw.png',
+				Bedingungen = { travelConditions={{maxQuestsInPlay=0}} },
+				Ereignisse = { 'GreyMountainsM1_Hope1', 'GreyMountainsM1_Hope2', 'GreyMountainsM1_Hope3', 'GreyMountainsM1_Threat1', 'GreyMountainsM1_Threat2' },
+				Start = { SpurinsGebirge=1, BilwissSpäher_StreifenderBilwiss={1,2,2,3}, BilwissSpurenleser={0,1,1,1}, BilwissNachzügler_GundabadBogenschütze={0,1,1,2} },
+				Deck = 'GraueBergeSpur'
+			},
+			{	Missionsname = 'missionGreyMountains2', Missionsbild = 'https://i.imgur.com/rjecknH.png',
+				Bedingungen = { travelConditions={{maxQuestsInPlay=0,noBossInPlay={name='Grashuk'},noEnemyInPlay={trait='Troll'}}} },
+				Ereignisse = { 'GreyMountainsM2_Hope1', 'GreyMountainsM2_Hope2', 'GreyMountainsM2_Hope3', 'GreyMountainsM2_Threat1' },
+				Start = { Trolltrubel=1, Grashuk=1, GundabadWächter={1,1,1,2}, WildeTrollbrut={0,1,1,2}, GundabadBogenschütze={0,0,1,1} },
+				Deck = 'GraueBergeTrollwacht'
+			},
+			{	Missionsname = 'missionGreyMountains3', Missionsbild = 'https://i.imgur.com/iJWW27E.png',
+				Bedingungen = { victoryConditions={{maxQuestsInPlay=0,noBossInPlay={name='DerFelswender'}}} },
+				Ereignisse = { 'GreyMountainsM3_Hope1', 'GreyMountainsM3_Hope2', 'GreyMountainsM3_Hope3', 'GreyMountainsM3_Threat1', 'GreyMountainsM3_Threat2', 'GreyMountainsM3_Threat3' },
+				Start = { BeseitigedasGeröll=1, DerFelswender=1, GrauerBergriese={0,1,1,2}, KaltfelsenRiese={0,0,1,1}, UngeschützterKamm={0,1,1,1} },
+				Deck = 'GraueBergePass'
+			}
+		}
+	},
+
 -- 	ccamp
 -- 	{	Name = 'campXXX', Zyklus = 'XXX',
 -- 		Ereignisse={  },
@@ -2337,6 +2368,48 @@ EVENTS = {
 		value=42, title='evOrcSurpriseHuntingCall', targetPads={player='Sauron'}, effect={id='addGroupEffect',target='Diener',permanent=true,effect={tr='Auffrischung',id='addEffect',addCondition={ctype='Diener'},effectCondition={bossInPlay={name='Durbnakh'}},effect={tr='Berechnung',id='bonus',h=1}}} },
 	OrcSurpriseM3_Threat3 = {
 		value=45, title='evOrcSurpriseRelentless', effectTargets={ctype='Gegner',traits={'Ork','Wolf'}}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}} },
+	CampGreyMountains_Hope1 = {
+		campaign=true, hope=true, value=4, title='evGreyMountainsPathfinders', targetPads={player='players'}, effect={id='call',nameCondition={ctype='Verbündeter',trait='Zwerg',unique=false,maxCost=3}} },
+	CampGreyMountains_Hope2 = {
+		campaign=true, hope=true, value=7, title='evGreyMountainsSupplies', targetPads={player='players'}, effect={id='resource',value=2,followingEffect={id='draw'}} },
+	CampGreyMountains_Hope3 = {
+		campaign=true, hope=true, value=10, title='evGreyMountainsDurinsFolk', effectTargets={ctype='Held'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',a=1,Block=true,delete='Ende'}} },
+	CampGreyMountains_Threat1 = {
+		campaign=true, value=33, title='evGreyMountainsAscent', targetPads={player='players'}, effect={id='exhaust',target='Charakter',randomTarget=true,targetCondition={player='self',ready=true}} },
+	CampGreyMountains_Threat2 = {
+		campaign=true, value=39, title='evGreyMountainsLostSupplies', targetPads={player='players'}, effect={id='deckDiscard',value=3} },
+	CampGreyMountains_Threat3 = {
+		campaign=true, value=44, title='evGreyMountainsStorm', effectTargets={ctype='Charakter',noAttribute='Block'}, effect={id='damage'} },
+	GreyMountainsM1_Hope1 = {
+		hope=true, value=2, title='evGreyMountainsOrcsRest', targetPads={player='active'}, effect={id='exhaust',targeting=true,target='Gegner',targetCondition={ready=true}}, eventCondition={enemyInPlay={ready=true}} },
+	GreyMountainsM1_Hope2 = {
+		hope=true, value=6, title='evGreyMountainsWaymark', effectTargets={name='SpurinsGebirge'}, effect={id='progress'}, eventCondition={questInPlay={name='SpurinsGebirge'}}, kill={tr='Gruppenverlassen',triggerCondition={name='SpurinsGebirge'}} },
+	GreyMountainsM1_Hope3 = {
+		hope=true, value=8, title='evGreyMountainsSafeDistance', effectTargets={ctype='Gegner'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',a=-1,delete='Ende'}} },
+	GreyMountainsM1_Threat1 = {
+		value=35, title='evGreyMountainsScoutsAlarm', targetPads={player='Sauron'}, effect={id='call',name='BilwissSpurenleser',mustCall=true}, eventCondition={freeSauronSpaces=true} },
+	GreyMountainsM1_Threat2 = {
+		value=42, title='evGreyMountainsTrailFades', effectTargets={name='SpurinsGebirge'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',w=1,repeatValue='PlayerCount'}}, eventCondition={questInPlay={name='SpurinsGebirge'}}, kill={tr='Gruppenverlassen',triggerCondition={name='SpurinsGebirge'}} },
+	GreyMountainsM2_Hope1 = {
+		hope=true, value=4, title='evGreyMountainsTrollQuarrel', effectTargets={name='Trolltrubel'}, effect={id='progress',sourceValue='PlayerCount'}, eventCondition={questInPlay={name='Trolltrubel'}}, kill={tr='Gruppenverlassen',triggerCondition={name='Trolltrubel'}} },
+	GreyMountainsM2_Hope2 = {
+		hope=true, value=6, title='evGreyMountainsSilentHorn', targetPads={player='active'}, effect={id='damage',value=3,ignoreBlock=true,targeting=true,target='Gegner',targetCondition={name='BilwissHornbläser',damageable=true}}, eventCondition={enemyInPlay={name='BilwissHornbläser',damageable=true}} },
+	GreyMountainsM2_Hope3 = {
+		hope=true, value=9, title='evGreyMountainsRuinsCover', effectTargets={ctype='Charakter'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',Konter=true,delete='Ende'}} },
+	GreyMountainsM2_Threat1 = {
+		value=43, title='evGreyMountainsTrollFury', effectTargets={ctype='Gegner',trait='Troll'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',a=1,delete='Ende'}}, eventCondition={enemyInPlay={trait='Troll'}} },
+	GreyMountainsM3_Hope1 = {
+		hope=true, value=5, title='evGreyMountainsBlastingCraft', effectTargets={name='BeseitigedasGeröll'}, effect={id='progress',sourceValue='PlayerCount',multValue=2}, eventCondition={questInPlay={name='BeseitigedasGeröll'}}, kill={tr='Gruppenverlassen',triggerCondition={name='BeseitigedasGeröll'}} },
+	GreyMountainsM3_Hope2 = {
+		hope=true, value=7, title='evGreyMountainsGapInHail', effectTargets={name='DerFelswender'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',Block=false,delete='Ende'}}, eventCondition={bossInPlay={name='DerFelswender',attribute='Block'}}, kill={tr='Gruppenverlassen',triggerCondition={name='DerFelswender'}} },
+	GreyMountainsM3_Hope3 = {
+		hope=true, value=11, title='evGreyMountainsRockLedge', effectTargets={ctype='Held'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',Abschirmen=true,delete='Schirmbruch'}} },
+	GreyMountainsM3_Threat1 = {
+		value=34, title='evGreyMountainsNewHail', targetPads={player='Sauron'}, effect={id='call',name='Geröll',mustCall=true}, eventCondition={freeSauronSpaces=true} },
+	GreyMountainsM3_Threat2 = {
+		value=42, title='evGreyMountainsTakesAim', effectTargets={name='DerFelswender'}, effect={id='addEffect',effect={tr='Ende',id='damage',value=2,target='Charakter',randomTarget=true,targetCondition={damageable=true},delete='Ende'}}, eventCondition={bossInPlay={name='DerFelswender'}}, kill={tr='Gruppenverlassen',triggerCondition={name='DerFelswender'}} },
+	GreyMountainsM3_Threat3 = {
+		value=46, title='evGreyMountainsNewRockfall', effectTargets={name='BeseitigedasGeröll'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',w=2,repeatValue='PlayerCount'}}, eventCondition={questInPlay={name='BeseitigedasGeröll'}}, kill={tr='Gruppenverlassen',triggerCondition={name='BeseitigedasGeröll'}} },
 }
 -- ccev		
 
