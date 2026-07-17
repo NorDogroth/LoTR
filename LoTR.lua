@@ -193,6 +193,7 @@ EXTERNAL_SCRIPT_SOURCES = {
 	}
 }
 PENDING_EXTERNAL_SCRIPT_LOADS = 0
+STARTUP_DATA_RETRIES = 0
 
 function onLoad(saved_data)
 -- 	lua for i,obj in ipairs(gtag('fixed')) do obj.interactable = true end
@@ -261,8 +262,24 @@ function handleExternalScriptResponse(scriptName, targetTag, response)
 end
 
 function continueStartup()
+	local transObj = gftag('TransData')
+	local cardObj = gftag('CardData')
+	local gameObj = gftag('GameData')
+	local trans = transObj and transObj.getTable('TRANS')
+	local heroes = cardObj and cardObj.getTable('HEROES')
+	local campaigns = gameObj and gameObj.getTable('CAMPAIGNS')
+	if not trans or not heroes or not campaigns then
+		STARTUP_DATA_RETRIES = STARTUP_DATA_RETRIES + 1
+		if STARTUP_DATA_RETRIES <= 120 then
+			Wait.frames(continueStartup,10)
+		else
+			log('Externe Datenskripte konnten nicht vollständig initialisiert werden.', '', 'error')
+		end
+		return
+	end
+	STARTUP_DATA_RETRIES = 0
 	setFixedObjectsNonInteractable()
-	TRANS = gftag('TransData').getTable('TRANS')
+	TRANS = trans
 	loadData()
 --	tlCast({{'loadingMessage'}},COL_PHASE)
 	setupCardSelectors()
