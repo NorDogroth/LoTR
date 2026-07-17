@@ -3751,7 +3751,7 @@ function checkCardMatchingCondition(card,condition,scard,tcard,reverse)		-- CCM
 		or condition.targetHasNotEffect and hasTempEffect(tcard,condition.targetHasNotEffect)
 		or condition.targetHasNotEquipment and hasEquipment(tcard)
 		or condition.targetHasNotEquipmentName and hasEquipmentWithName(tcard,condition.targetHasNotEquipmentName)
-		or condition.targetHasNotEquipmentTrait and hasEquipmentTrait(tcard,condition.targetHasEquipmentTrait)
+		or condition.targetHasNotEquipmentTrait and hasEquipmentTrait(tcard,condition.targetHasNotEquipmentTrait)
 		or condition.targetMaxAttack and currAttack(tcard) > condition.targetMaxAttack
 		or condition.targetMaxCost and currCost(tcard) > condition.targetMaxCost
 		or condition.targetMaxDamage and currDamage(tcard) > condition.targetMaxDamage
