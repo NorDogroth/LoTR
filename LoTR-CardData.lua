@@ -1585,6 +1585,9 @@ SHADOWS = {
  	Schlitzermesser = {de='Schlitzermesser',en="Slasher's Knife", cost=0,trait='Schatten',img='https://i.imgur.com/xkG4m7E.jpg',text="eqSlasherKnife", ctype='Schattenkarte', target='Gegner', equipCondition={traits={'Dunland','Rhudaur','Bandit','Bösartiger Mann'},noAttributes={'Hinterhalt','Konter'}}},
  	BlutigerZorn = {de='Blutiger Zorn',en="Bloody Fury", cost=1,trait='Schatten',img='https://i.imgur.com/5La5Hy1.jpg',text="eqBloodyFury", ctype='Schattenkarte', target='Diener', equipCondition={traits={'Dunland','Rhudaur','Bandit'},noAttribute='Dauererschöpfung'}},
  	Kopfjäger = {de='Kopfjäger',en="Head Hunter", cost=1,trait='Schatten',img='https://i.imgur.com/WztyADY.jpg',text="eqHeadHunter", ctype='Schattenkarte', target='Diener', equipCondition={traits={'Dunland','Rhudaur'},noAttribute='Dauererschöpfung'}},
+	Vereist1 = {de='Vereist',en="Frozen",cost=0,trait='Schatten',img='https://i.imgur.com/VHCjtyW.png',text="eqFrozen1",ctype='Schattenkarte',target='Charakter'},
+	Vereist2 = {de='Vereist',en="Frozen",cost=0,trait='Schatten',img='https://i.imgur.com/VHCjtyW.png',text="eqFrozen2",ctype='Schattenkarte',target='Charakter'},
+	Vereist3 = {de='Vereist',en="Frozen",cost=0,trait='Schatten',img='https://i.imgur.com/VHCjtyW.png',text="eqFrozen3",ctype='Schattenkarte',target='Charakter'},
 -- 	XXX = {de='XX',en="", cost=,trait='Schatten',img='XX',text="eqXX", ctype='Schattenkarte', target='XXX'},
 }
 
@@ -3230,6 +3233,9 @@ EFFECTS = {
 	Schlitzermesser = { {tr='Berechnung',id='bonus',Hinterhalt=true,Konter=true,code='Schlitzermesser'} },
 	BlutigerZorn = { {tr='Gruppensterben',id='ready',triggerCondition={ctype='Gegner',excludeSource=true}, effectCondition={canReady=true,minHealth=1}, code='Blutiger Zorn'} },
 	Kopfjäger = { {tr='Berechnung',id='bonus',a=1,code='Kopfjäger 1'}, {tr='Ende',id='kill',target='Verbündeter', targeting=true,targetCondition={unprotected=true,unique=false},tlaction='actHeadHunter',code='Kopfjäger 2'} },
+	Vereist1 = { {tr='Berechnung',id='bonus',a=-1,w=-1,code='Vereist 11'}, {tr='Ende',id='unequip',trait='Schatten',code='Vereist 12',followingEffect={id='damage'}} },
+	Vereist2 = { {tr='Sofort',id='exhaust',code='Vereist 21'}, {tr='Berechnung',id='bonus',Dauererschöpfung=true,code='Vereist 21'}, {tr='Auffrischung',id='unequip',trait='Schatten',code='Vereist 22'} },
+	Vereist3 = { {tr='Ende',id='damage',code='Vereist 31'}, {tr='Macht',id='unequip',trait='Schatten',exhaust=true,effectCondition={ready=true},code='Vereist 32'} },
 	-- SAURON-EVENETS
 	WiderwärtigeBrut = { {tr='Sofort',id='heal',targetValue='Damage',randomTarget=true, target='Schurke',targetCondition={name='UngoliantsBrut',canHeal=true},tlaction='actRestoredFullHealth'} },
 	GierigeFinger = { {tr='Sofort',id='unequip',randomTarget=true,tlaction='actLostEquipment', target='Held',targetCondition={hasEquipment=true}} },
@@ -3442,6 +3448,7 @@ NAME_GROUPS = {
 	Schmiedeteile = { 'AlterZylinder', 'AltesZahnrad', 'AltesAufsatzrohr', 'AltesVerbindungsstück', 'AltesLeitungsrohr', 'AltesVentil', 'DefekterZylinder', 'DefektesZahnrad', 'DefektesAufsatzrohr', 'DefektesVerbindungsstück', 'DefektesLeitungsrohr', 'DefektesVentil' },
 	Reparaturbedarf = { },
 	Hordenorks = { 'SnagaVeteran', 'HünenhafterOrk', 'RasenderOrk', 'BilwissSpeerträger', 'Tunnelstürmer', 'BilwissMarodeure', 'BilwissBrandschatzer', 'OrkBestienmeister', 'BilwissHornbläser', 'EineHordeOrks' },
+	Vereist = {'Vereist1','Vereist2','Vereist3'},
  }
 -- ccgroup
 
