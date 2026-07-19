@@ -652,6 +652,11 @@ BOSSES = {
 	Thraknakh = { de='Thraknâkh',cost=7,a=3,h={10,14,18,22},hh=4,vh=4,trait='Wolf',ctype='Schurke',unique=true},
 	Grashuk = { de='Grashuk',cost=6,a=2,h={10,14,18,20},hh=4,vh=3,trait='Ork',ctype='Schurke',unique=true},
 	DerFelswender = { de='Der Felswender',en='The Rock-Hurler',cost=8,a=3,h={14,18,24,28},hh=4,vh=4,trait='Riese',ctype='Schurke',unique=true},
+	FliegenderKaltdracheLuftkampf = {de='Fliegender Kaltdrache',en="Flying Cold-drake",cost=11,a=3,h=30,hh=4,vh=4,trait='Drache',ctype='Schurke',unique=true},
+	WütenderKaltdrache = {de='Wütender Kaltdrache',en="Enraged Cold-drake",cost=11,a=3,h=30,hh=4,vh=4,trait='Drache',ctype='Schurke',unique=true},
+	FliegenderKaltdracheLuft = {de='Kaltdrache vor dem Tor',en="Cold-drake before the Gate",cost=11,a=3,h=30,hh=4,vh=4,trait='Drache',ctype='Schurke',unique=true},
+	RasenderKaltdrache = {de='Rasender Kaltdrache',en="Rampaging Cold-drake",cost=11,a=3,h=30,hh=4,vh=4,trait='Drache',ctype='Schurke',unique=true},
+	VerwundeterKaltdrache = {de='Verwundeter Kaltdrache',en="Wounded Cold-drake",cost=9,a=2,h=15,hh=3,vh=3,trait='Drache',ctype='Schurke',unique=true},
 -- 	XX = { de='XXX',en="XX", cost=,a=,h=,hh=,vh=,trait='YYY',ctype='Schurke',unique=true},
 }
 
@@ -2389,6 +2394,11 @@ EFFECTS = {
 	Thraknakh = { {tr='Berechnung',id='bonus',Standhaft=true}, {tr='Auffrischung',id='addEffect',target='Diener',targetAll=true,targetCondition={trait='Ork',noAttribute='Standhaft'},effectCondition={minQuestsInPlay=1},effect={tr='Berechnung',id='bonus',Standhaft=true,delete='Ende'}} },
 	Grashuk = { {tr='Berechnung',id='bonus',Konter=true}, {tr='Auffrischung',id='call',name='BilwissHornbläser',followTarget=true,followingEffect={id='addEffect',effect={tr='Berechnung',id='bonus',Block=true}}} },
 	DerFelswender = { {tr='Berechnung',id='bonus',Block=true}, {tr='Ende',id='damage',value=3,target='Charakter',randomTarget=true,targetCondition={damageable=true}} },
+	FliegenderKaltdracheLuftkampf = { {tr='Berechnung',id='bonus',Fliegend=true,Standhaft=true}, {tr='Angriffsende',id='call',name='Frostkugel'}, {tr='Verlassen',id='call',name='VerwundeterKaltdrache',mustCall=true} },
+	WütenderKaltdrache = { {tr='Berechnung',id='bonus',Konter=true,Standhaft=true}, {tr='Angriffsende',id='call',name='Frostkugel'}, {tr='Verlassen',id='call',name='VerwundeterKaltdrache',mustCall=true} },
+	FliegenderKaltdracheLuft = { {tr='Berechnung',id='bonus',Gesperrt=true}, {tr='Gruppenverlassen',id='call',name='Frostkugel',mustCall=true,repeatEffect=true,repeatValue='PlayerCount',triggerCondition={name='VerbarrikadiertesTor'}}, {tr='Gruppenverlassen',id='damage',value=2,target='Charakter',targetAll=true,targetCondition={stance='Schützen',damageable=true},triggerCondition={name='VerbarrikadiertesTor'}}, {tr='Gruppenverlassen',id='leave',triggerCondition={name='VerbarrikadiertesTor'},followingEffect={id='call',name='RasenderKaltdrache',mustCall=true}} },
+	RasenderKaltdrache = { {tr='Angriffsende',id='call',name='Frostkugel'}, {tr='Angriff',triggerCondition={targetStance='Schützen'},id='addEffect',effect={tr='Angriffsende',delete='Aktionsende',id='ready',triggerCondition={minHealth=1}}}, {tr='Rache',id='call',name='VerwundeterKaltdrache',mustCall=true} },
+	VerwundeterKaltdrache = { {tr='Berechnung',id='bonus',Block=true,Konter=true}, {tr='Abwehrende',id='unequip',trait='Waffe',targetAttacker=true,back=true,code='Kaltdrachenpanzer',triggerCondition={targetHasEquipmentTrait='Waffe',targetVulnerable=true,targetMinHealth=1}} },
 
 -- 	DIENER
 	VerwirrenderSchatten = { {tr={'Auffrischung','Ankunft'},id='setStance',stance='Schützen'}, {tr='Auffrischung',id='threat'} },
