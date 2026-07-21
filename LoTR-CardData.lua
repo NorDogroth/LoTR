@@ -1767,6 +1767,13 @@ SAURONEVENTS= {
 	BlutspurimSchnee = {de="Blutspur im Schnee",en="Blood Trail in the Snow",cost=0,ctype='SEreignis'},
 	UnsichtbareAngriffe = {de="Unsichtbare Angriffe",en="Invisible Assaults",cost=2,ctype='SEreignis'},
 	RudelaufdenSpuren = {de="Rudel auf den Spuren",en="Pack on the Trail",cost=2,ctype='SEreignis'},
+	VerwehteSpuren = {de="Verwehte Spuren",en="Windblown Tracks",cost=1,ctype='SEreignis',playCondition={questInPlay={group='Drachenzeichen',minProgress=1}}},
+	AufgescheuchteBestien = {de="Aufgescheuchte Bestien",en="Panicked Beasts",cost=2,ctype='SEreignis',playCondition={freeSauronSpaces=true}},
+	VereisteArbeiten = {de="Vereiste Arbeiten",en="Frozen Preparations",cost=1,ctype='SEreignis',playCondition={questInPlay={targetable=true},charInPlay={ready=true}}},
+	EisigerHauch = {de="Eisiger Hauch",en="Icy Breath",cost=1,ctype='SEreignis',playCondition={allyInPlay={hasNotEquipmentTrait='Schatten'}}},
+	EisigerSchutz = {de="Eisiger Schutz",en="Icy Protection",cost=2,ctype='SEreignis',playCondition={bossInPlay={trait='Drache'},freeSauronSpaces=true}},
+	UnerbittlicherDrachenzorn = {de="Unerbittlicher Drachenzorn",en="Relentless Dragon Fury",cost=2,ctype='SEreignis',playCondition={bossInPlay={trait='Drache',canReady=true}},forcePlay={bossInPlay={trait='Drache',canReady=true},noReadySAttacker=true}},
+	BerstenderFrost = {de="Berstender Frost",en="Shattering Frost",cost=3,ctype='SEreignis',playCondition={charInPlay={hasEffect='Vereist'}}},
 -- 	XXX = {de="XXX",en="",cost=,ctype='SEreignis'},
 }
 
@@ -3308,9 +3315,9 @@ EFFECTS = {
 	Schlitzermesser = { {tr='Berechnung',id='bonus',Hinterhalt=true,Konter=true,code='Schlitzermesser'} },
 	BlutigerZorn = { {tr='Gruppensterben',id='ready',triggerCondition={ctype='Gegner',excludeSource=true}, effectCondition={canReady=true,minHealth=1}, code='Blutiger Zorn'} },
 	Kopfjäger = { {tr='Berechnung',id='bonus',a=1,code='Kopfjäger 1'}, {tr='Ende',id='kill',target='Verbündeter', targeting=true,targetCondition={unprotected=true,unique=false},tlaction='actHeadHunter',code='Kopfjäger 2'} },
-	Vereist1 = { {tr='Berechnung',id='bonus',a=-1,w=-1,code='Vereist 11'}, {tr='Ende',id='unequip',trait='Schatten',code='Vereist 12',followingEffect={id='damage'}} },
-	Vereist2 = { {tr='Sofort',id='exhaust',code='Vereist 21'}, {tr='Berechnung',id='bonus',Dauererschöpfung=true,code='Vereist 21'}, {tr='Auffrischung',id='unequip',trait='Schatten',code='Vereist 22'} },
-	Vereist3 = { {tr='Ende',id='damage',code='Vereist 31'}, {tr='Macht',id='unequip',trait='Schatten',exhaust=true,effectCondition={ready=true},code='Vereist 32'} },
+	Vereist1 = { {tr='Berechnung',id='bonus',code='Vereist'}, {tr='Berechnung',id='bonus',a=-1,w=-1,code='Vereist 11'}, {tr='Ende',id='unequip',trait='Schatten',code='Vereist 12',followingEffect={id='damage'}} },
+	Vereist2 = { {tr='Berechnung',id='bonus',code='Vereist'}, {tr='Sofort',id='exhaust',code='Vereist 21'}, {tr='Berechnung',id='bonus',Dauererschöpfung=true,code='Vereist 21'}, {tr='Auffrischung',id='unequip',trait='Schatten',code='Vereist 22'} },
+	Vereist3 = { {tr='Berechnung',id='bonus',code='Vereist'}, {tr='Ende',id='damage',code='Vereist 31'}, {tr='Macht',id='unequip',trait='Schatten',exhaust=true,effectCondition={ready=true},code='Vereist 32'} },
 	-- SAURON-EVENETS
 	WiderwärtigeBrut = { {tr='Sofort',id='heal',targetValue='Damage',randomTarget=true, target='Schurke',targetCondition={name='UngoliantsBrut',canHeal=true},tlaction='actRestoredFullHealth'} },
 	GierigeFinger = { {tr='Sofort',id='unequip',randomTarget=true,tlaction='actLostEquipment', target='Held',targetCondition={hasEquipment=true}} },
@@ -3447,6 +3454,13 @@ EFFECTS = {
 	BlutspurimSchnee = { {tr='Sofort',id='handleEffect',targetPads={player='players'}, effect={id='options',options={ {tr='Sofort',id='threat'}, {id='deckDiscard',info='discardAllyFromDeck',nameCondition={ctype='Verbündeter'}} }}} },
 	UnsichtbareAngriffe = { {tr='Sofort',id='addGroupEffect',permanent=true, effect={tr='Angriff',id='addEffect',code='Unsangriffe',addCondition={ctype='Gegner'}, effect={tr='Berechnung',id='bonus',Abschirmen=true,delete='Aktionsende'}}, followingEffect={id='addEffect',targetPads={player='Sauron'},effect={tr='Ende',delete='Ende',id='removeGroupEffect', target='Gegner', removeCode='Unsangriffe'}}} },
 	RudelaufdenSpuren = { {tr='Sofort',id='addEffect',targetPads={player='Sauron'}, effect={tr='Ende',delete='Ende',id='call',name='JagendesRudel',triggerCondition={minLeftHope=1}}} },
+	VerwehteSpuren = { {tr='Sofort',id='progress',value=-2,targeting=true,target='Quest',targetCondition={group='Drachenzeichen',minProgress=1}} },
+	AufgescheuchteBestien = { {tr='Sofort',id='mod',mod='panickedBeastsPlayed'}, {tr='Sofort',id='call',name='PanischeNatter',effectCondition={maxMod={'panickedBeastsPlayed',1}}}, {tr='Sofort',id='call',name='PanischerWolf',effectCondition={minMod={'panickedBeastsPlayed',2},maxMod={'panickedBeastsPlayed',2}}}, {tr='Sofort',id='call',name='PanischesRudel',effectCondition={minMod={'panickedBeastsPlayed',3},maxMod={'panickedBeastsPlayed',3}}}, {tr='Sofort',id='call',name='PanischerTroll',effectCondition={minMod={'panickedBeastsPlayed',4},maxMod={'panickedBeastsPlayed',4}}}, {tr='Sofort',id='call',name='PanischerSchneebär',effectCondition={minMod={'panickedBeastsPlayed',5}}} },
+	VereisteArbeiten = { {tr='Sofort',id='addEffect',targetPads={player='Sauron'},effect={tr='Gruppenangehensende',id='damage',targetTrigger=true,ignoreBlock=true,delete='Ende',triggerCondition={ctype='Charakter',targetCtype='Quest',damageable=true}}} },
+	EisigerHauch = { {tr='Sofort',id='equipWithName',group='Vereist',target='Verbündeter',randomTarget=true,targetCondition={hasNotEquipmentTrait='Schatten'}} },
+	EisigerSchutz = { {tr='Sofort',id='call',name='Eismauer',followTarget=true,followingEffect={id='addEffect',effect={tr='Berechnung',id='bonus',Vergänglich=true}}} },
+	UnerbittlicherDrachenzorn = { {tr='Sofort',id='ready',target='Schurke',randomTarget=true,targetCondition={trait='Drache',canReady=true},tlaction='actReady'} },
+	BerstenderFrost = { {tr='Sofort',id='damage',sourceValue='Random',maxRan=2,target='Charakter',targetAll=true,targetCondition={hasEffect='Vereist',damageable=true},ignoreBlock=true}, {tr='Sofort',id='unequip',trait='Schatten',target='Charakter',targetAll=true,targetCondition={hasEffect='Vereist'}} },
 }
 function linkEffectEnd() end
 
