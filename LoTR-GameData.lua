@@ -224,6 +224,12 @@
 			Deck = { GundabadWächter=6, GundabadBogenschütze=5, GundabadScharmützler=5, BilwissPeiniger=4, BilwissSammler=3, BilwissMarodeure=3, BilwissHornbläser=2, OrkMeute=4, WildeTrollbrut=12, GrausamerBergtroll=5, UnbarmherzigerHügeltroll=5, SteintrollaufFuttersuche=2, Felsenklippen=3, UnebenerBoden=3, ImSchattenderBerge=3, WenigVorräte=3, GarstigesWetter=3, DunkleWolken=2, AngreifbareStelle=2, Felssturz=1, Veteran=3, DunkleVerteidigung=3, Unnachgiebig=2 } },
 		GraueBergePass = { Boss = { 'DerFelswender' },
 			Deck = { GrauerBergriese=8, KaltfelsenRiese=6, Schneeriese=3, BilwissimWolfspelz=5, Felsenklippen=4, Felssturz=4, Lawine=3, UnebenerBoden=4, ImSchattenderBerge=4, UngeschützterKamm=3, GeschütztesTal=2, WenigVorräte=3, GarstigesWetter=3, DunkleWolken=3, AngreifbareStelle=3, Erschöpfung=3, Geschwächt=3, Veteran=3, Unnachgiebig=3, DunkleVerteidigung=4 } },
+		Drachenspuren = { Boss = { },
+			Deck = { PanischeNatter=4, PanischerWolf=4, PanischesRudel=3, PanischerTroll=2, PanischerSchneebär=1, AusgehungerterFalke=4, Kaltdrachenjunges=3, JugendlicherKaltdrache=1, WolfdesTals=1, Winterwolf=2, BilwissimWolfspelz=2, EisigerWind=2, Schneesturm=2, VereisteVorräte=2, TieferSchnee=2, Gewitterblitze=2, Eisstacheln=1, GarstigesWetter=2, WenigVorräte=2, VerwehteSpuren=3, AufgescheuchteBestien=3, EisigerHauch=1 } },
+		Jagdvorbereitungen = { Boss = { },
+			Deck = { PanischerWolf=3, PanischesRudel=3, PanischerTroll=2, PanischerSchneebär=1, Kaltdrachenjunges=5, JugendlicherKaltdrache=5, Kreaturenhöhle=2, TieferSchnee=2, Gewitterblitze=2, VereisteVorräte=2, EisigerWind=2, Schneesturm=2, GarstigesWetter=2, VereisteArbeiten=3, EisigerHauch=2, AufgescheuchteBestien=3 } },
+		Kaltdrachenzorn = { Boss = { 'FliegenderKaltdracheLuftkampf', 'WütenderKaltdrache', 'RasenderKaltdrache' },
+			Deck = { Frostkugel=4, Kaltdrachenjunges=3, JugendlicherKaltdrache=2, Eismauer=3, Eisstacheln=3, Eiswind=3, TieferSchnee=2, Gewitterblitze=2, EisigerWind=2, Schneesturm=2, WenigVorräte=3, Eiszapfen=2, GefroreneHände=2, EisigerSchutz=3, UnerbittlicherDrachenzorn=2, EisigerHauch=4, BerstenderFrost=3 } },
 -- 		Deckname = { Boss = {  },
 -- 			Deck = {  } },
 	}
@@ -1339,6 +1345,43 @@ CAMPAIGNS = {
 		}
 	},
 
+
+	{	Name = 'campColdDrakeHunt', Zyklus = 'cyErebor',
+		Startereignisse = {
+			{targetPads={player='Sauron'}, effect={id='handleEffects',effects={
+				{id='group',group='Drachenzeichen',addNames={'AbgestreifteSchuppe','GewaltigeKrallenspur','UnnatürlicheKälte','GefrorenerKadaver','ZerbrocheneEierschalen'}},
+				{id='call',group='Drachenzeichen',mustCall=true}
+			}}},
+			{targetPads={player='Sauron'}, effect={id='addEffects',effects={
+				{tr='Auffrischung',id='handleEffects',triggerCondition={location=3,minMod={'BallisteVorbereitet',1},maxMod={'DrachenfinaleHochkammGestartet',0}},effects={{id='call',name='FliegenderKaltdracheLuftkampf',mustCall=true},{id='call',name='Ballisteabfeuern',mustCall=true},{id='mod',mod='DrachenfinaleHochkammGestartet',overwrite=true}}},
+				{tr='Auffrischung',id='handleEffects',triggerCondition={location=3,minMod={'SpeerfalleVorbereitet',1},maxMod={'DrachenfinaleSpeerfalleGestartet',0}},effects={{id='call',name='GroßeSpeerfalle',mustCall=true},{id='mod',mod='DrachenfinaleSpeerfalleGestartet',overwrite=true}}},
+				{tr='Auffrischung',id='handleEffects',triggerCondition={location=3,minMod={'FelsfalleVorbereitet',1},maxMod={'DrachenfinaleFelspassGestartet',0}},effects={{id='call',name='WütenderKaltdrache',mustCall=true},{id='call',name='Felsfalleauslösen',mustCall=true},{id='mod',mod='DrachenfinaleFelspassGestartet',overwrite=true}}},
+				{tr='Auffrischung',id='handleEffects',triggerCondition={location=3,minMod={'TorVerbarrikadiert',1},maxMod={'DrachenfinaleHalleGestartet',0}},effects={{id='addCardToDeck',name='AlterSchatz',value=2},{id='addCardToDeck',name='OrksaufBeutesuche',value=2},{id='call',name='FliegenderKaltdracheLuft',mustCall=true},{id='call',name='VerbarrikadiertesTor',mustCall=true},{id='mod',mod='DrachenfinaleHalleGestartet',overwrite=true}}}
+			}}}
+		},
+		Ereignisse = { 'CampColdDrakeHunt_Hope1', 'CampColdDrakeHunt_Hope2', 'CampColdDrakeHunt_Hope3', 'CampColdDrakeHunt_Threat1', 'CampColdDrakeHunt_Threat2', 'CampColdDrakeHunt_Threat3' },
+		Orte = {
+			{	Missionsname = 'missionColdDrakeHunt1', Missionsbild = 'https://i.imgur.com/R6VPRdZ.png',
+				Bedingungen = { travelConditions={{maxQuestsInPlay=0}} },
+				Ereignisse = { 'ColdDrakeHuntM1_Hope1', 'ColdDrakeHuntM1_Hope2', 'ColdDrakeHuntM1_Hope3', 'ColdDrakeHuntM1_Threat1', 'ColdDrakeHuntM1_Threat2' },
+				Start = { PanischeNatter=1, AusgehungerterFalke={0,1,1,2}, Kaltdrachenjunges={0,0,1,1} },
+				Deck = 'Drachenspuren'
+			},
+			{	Missionsname = 'missionColdDrakeHunt2', Missionsbild = 'https://i.imgur.com/llFjJpT.png',
+				Bedingungen = { travelConditions={{maxQuestsInPlay=0}} },
+				Ereignisse = { 'ColdDrakeHuntM2_Hope1', 'ColdDrakeHuntM2_Hope2', 'ColdDrakeHuntM2_Threat1', 'ColdDrakeHuntM2_Threat2' },
+				Start = { OffenerHochkamm=1, EngerFelspass=1, AlteZwergenhalle=1, Winterwolf=2, Kaltdrachenjunges={0,1,1,1}, Frostkugel={0,0,1,1} },
+				Deck = 'Jagdvorbereitungen'
+			},
+			{	Missionsname = 'missionColdDrakeHunt3', Missionsbild = 'https://i.imgur.com/XPxzCW5.png',
+				Bedingungen = { victoryConditions={{minMod={'campaignVictory',1}}} },
+				Ereignisse = { 'ColdDrakeHuntM3_Hope1', 'ColdDrakeHuntM3_Hope2', 'ColdDrakeHuntM3_Hope3', 'ColdDrakeHuntM3_Threat1', 'ColdDrakeHuntM3_Threat2', 'ColdDrakeHuntM3_Threat3' },
+				Start = { },
+				Deck = 'Kaltdrachenzorn'
+			}
+		}
+	},
+
 -- 	ccamp
 -- 	{	Name = 'campXXX', Zyklus = 'XXX',
 -- 		Ereignisse={  },
@@ -2410,6 +2453,48 @@ EVENTS = {
 		value=42, title='evGreyMountainsTakesAim', effectTargets={name='DerFelswender'}, effect={id='addEffect',effect={tr='Ende',id='damage',value=2,target='Charakter',randomTarget=true,targetCondition={damageable=true},delete='Ende'}}, eventCondition={bossInPlay={name='DerFelswender'}}, kill={tr='Gruppenverlassen',triggerCondition={name='DerFelswender'}} },
 	GreyMountainsM3_Threat3 = {
 		value=46, title='evGreyMountainsNewRockfall', effectTargets={name='BeseitigedasGeröll'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',w=2,repeatValue='PlayerCount'}}, eventCondition={questInPlay={name='BeseitigedasGeröll'}}, kill={tr='Gruppenverlassen',triggerCondition={name='BeseitigedasGeröll'}} },
+	CampColdDrakeHunt_Hope1 = {
+		campaign=true, hope=true, value=5, title='evColdDrakeWeaponsFromErebor', targetPads={player='active'}, effect={id='equipWithName',targeting=true,target='Charakter',nameCondition={ctype='Verstärkung',trait='Waffe',unique=false},targetCondition={player='self',equippable=true},info='equipRandomWeapon'} },
+	CampColdDrakeHunt_Hope2 = {
+		campaign=true, hope=true, value=7, title='evColdDrakeHuntersForesight', targetPads={player='players'}, effect={id='resource',sourceValue='HandSize',effectCondition={maxHandSize=3}}, eventCondition={maxSmallestPlayerHand=3} },
+	CampColdDrakeHunt_Hope3 = {
+		campaign=true, hope=true, value=10, title='evColdDrakeUnbrokenCourage', targetPads={player='players'}, effect={id='handleEffects',targeting=true,target='Charakter',targetCondition={player='self',hasEquipmentTrait='Schatten'},effects={{id='unequip',trait='Schatten'},{id='ready'}}}, eventCondition={charInPlay={hasEquipmentTrait='Schatten'}} },
+	CampColdDrakeHunt_Threat1 = {
+		campaign=true, value=33, title='evColdDrakeDwindlingSupplies', targetPads={player='players'}, effect={id='handleEffects',effects={{id='resource',value=-1},{id='deckDiscard'}}} },
+	CampColdDrakeHunt_Threat2 = {
+		campaign=true, value=39, title='evColdDrakeBroodFollows', targetPads={player='Sauron'}, effect={id='handleEffects',effects={{id='call',name='JugendlicherKaltdrache',mustCall=true},{id='call',name='Kaltdrachenjunges',mustCall=true,effectCondition={minPlayers=3}}}} },
+	CampColdDrakeHunt_Threat3 = {
+		campaign=true, value=45, title='evColdDrakeNorthRises', effectTargets={ctype='Gegner'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',a=1,delete='Ende'}} },
+	ColdDrakeHuntM1_Hope1 = {
+		hope=true, value=2, title='evColdDrakeFreshTrail', effectTargets={group='Drachenzeichen'}, effect={id='progress',sourceValue='PlayerCount',multValue=2}, eventCondition={questInPlay={group='Drachenzeichen'}}, kill={tr='Gruppenverlassen',triggerCondition={group='Drachenzeichen'}} },
+	ColdDrakeHuntM1_Hope2 = {
+		hope=true, value=6, title='evColdDrakeAncientLore', targetPads={player='Sauron'}, effect={id='addEffect',effect={tr='Gruppenankunft',id='exhaust',targetTrigger=true,delete='Reise',triggerCondition={ctype='Diener',trait='Drache'},code='ColdDrakeNextMinion',followingEffect={id='removeEffect',removeCode='ColdDrakeNextMinion'}}} },
+	ColdDrakeHuntM1_Hope3 = {
+		hope=true, value=9, title='evColdDrakeShelteredRest', effectTargets={ctype='Charakter',exhausted=true,canHeal=true}, effect={id='heal'}, eventCondition={charInPlay={exhausted=true,canHeal=true}} },
+	ColdDrakeHuntM1_Threat1 = {
+		value=35, title='evColdDrakeMovesOn', effectTargets={group='Drachenzeichen'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',w=1,repeatValue='PlayerCount'}}, kill={tr='Gruppenverlassen',triggerCondition={group='Drachenzeichen'}} },
+	ColdDrakeHuntM1_Threat2 = {
+		value=42, title='evColdDrakeBeastsBreakLoose', targetPads={player='Sauron'}, effect={id='handleEffects',effects={{id='call',name='PanischeNatter',mustCall=true,effectCondition={maxPlayers=1}},{id='call',name='PanischerWolf',mustCall=true,effectCondition={minPlayers=2,maxPlayers=2}},{id='call',name='PanischesRudel',mustCall=true,effectCondition={minPlayers=3,maxPlayers=3}},{id='call',name='PanischerTroll',mustCall=true,effectCondition={minPlayers=4,maxPlayers=4}},{id='call',name='PanischerSchneebär',mustCall=true,effectCondition={minPlayers=5}}}} },
+	ColdDrakeHuntM2_Hope1 = {
+		hope=true, value=5, title='evColdDrakeDwarvenEngineering', effectTargets={ctype='Charakter'}, effect={id='addEffect',effect={tr='Angehen',id='addEffect',delete='Ende',triggerCondition={targetNames={'Ballisteaufbauen','Speerfallevorbereiten','Felsfallevorbereiten','DasTorverbarrikadieren'}},effect={tr='Berechnung',id='bonus',w=1,delete='Aktionsende'}}}, eventCondition={questInPlay={names={'Ballisteaufbauen','Speerfallevorbereiten','Felsfallevorbereiten','DasTorverbarrikadieren'}}} },
+	ColdDrakeHuntM2_Hope2 = {
+		hope=true, value=9, title='evColdDrakeFrostproofArmour', effectTargets={ctype='Charakter',hasEquipmentTrait='Rüstung'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',h=1}}, eventCondition={charInPlay={hasEquipmentTrait='Rüstung'}} },
+	ColdDrakeHuntM2_Threat1 = {
+		value=36, title='evColdDrakeFrozenTools', targetPads={player='Sauron'}, effect={id='addEffect',target='Quest',randomTarget=true,targetCondition={names={'Ballisteaufbauen','Speerfallevorbereiten','Felsfallevorbereiten','DasTorverbarrikadieren'}},effect={tr='Berechnung',id='bonus',w=2,repeatValue='PlayerCount'}} },
+	ColdDrakeHuntM2_Threat2 = {
+		value=43, title='evColdDrakeBroodBold', targetPads={player='Sauron'}, effect={id='handleEffects',effects={{id='addGroupEffect',target='Diener',effect={tr='Berechnung',id='bonus',a=1,Standhaft=true,delete='Ende',addCondition={trait='Drache'}}},{id='call',name='Kaltdrachenjunges',mustCall=true,followTarget=true,followingEffect={id='addEffect',effect={tr='Berechnung',id='bonus',a=1,Standhaft=true,delete='Ende'}}}}} },
+	ColdDrakeHuntM3_Hope1 = {
+		hope=true, value=5, title='evColdDrakeWarmingFire', effectTargets={ctype='Charakter',hasEffect='Vereist'}, effect={id='handleEffects',effects={{id='unequip',trait='Schatten'},{id='heal'}}}, eventCondition={charInPlay={hasEffect='Vereist'}} },
+	ColdDrakeHuntM3_Hope2 = {
+		hope=true, value=8, title='evColdDrakeRightMoment', targetPads={player='active'}, effect={id='progress',targeting=true,target='Zielvorgabe',sourceValue='Count',countCondition={ctype='Charakter'},targetCondition={names={'Ballisteabfeuern','Felsfalleauslösen','GroßeSpeerfalle','DieSchwachstelleangreifen','Eismauer'}}}, eventCondition={objectiveInPlay={names={'Ballisteabfeuern','Felsfalleauslösen','GroßeSpeerfalle','DieSchwachstelleangreifen','Eismauer'}}} },
+	ColdDrakeHuntM3_Hope3 = {
+		hope=true, value=11, title='evColdDrakeClearLine', effectTargets={ctype='Held'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',a=1,Fernkampf=true,delete='Ende'}} },
+	ColdDrakeHuntM3_Threat1 = {
+		value=38, title='evColdDrakeBuffetingWings', targetPads={player='players'}, effect={id='handleEffects',effects={{id='setStance',stance='Normal',target='Charakter',targetAll=true,targetCondition={player='self',noStance='Normal'}},{id='exhaust',target='Charakter',randomTarget=true,targetCondition={player='self',ready=true}}}} },
+	ColdDrakeHuntM3_Threat2 = {
+		value=44, title='evColdDrakeFrostOverAll', targetPads={player='players'}, effect={id='equipWithName',group='Vereist',target='Charakter',randomTarget=true,targetCondition={player='self',hasNotEquipmentTrait='Schatten'}} },
+	ColdDrakeHuntM3_Threat3 = {
+		value=47, title='evColdDrakeFinalFrenzy', effectTargets={ctype='Schurke',trait='Drache'}, effect={id='addEffect',effect={tr='Angriffsende',id='surge',delete='Ende'}} },
 }
 -- ccev		
 
