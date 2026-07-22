@@ -10168,5 +10168,6 @@ Gefroren = "Frozen",
 Riese = "Giant",
 Tentakel = "Tentacle",
 Flamme = "Flame",
+Drache = "Dragon",
 Kriegsgerät = "Siege Weapon",
 }
