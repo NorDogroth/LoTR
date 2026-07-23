@@ -1362,7 +1362,8 @@ CAMPAIGNS = {
 		Ereignisse = { 'CampColdDrakeHunt_Hope1', 'CampColdDrakeHunt_Hope2', 'CampColdDrakeHunt_Hope3', 'CampColdDrakeHunt_Threat1', 'CampColdDrakeHunt_Threat2', 'CampColdDrakeHunt_Threat3' },
 		Orte = {
 			{	Missionsname = 'missionColdDrakeHunt1', Missionsbild = 'https://i.imgur.com/R6VPRdZ.png',
-				Bedingungen = { travelConditions={{maxQuestsInPlay=0}} },
+				Zielzähler = {{goalValue='Mod',modValue='DrachenzeichenBewältigt'},{value=4}},
+				Bedingungen = { travelConditions={{goalReached=true}} },
 				Ereignisse = { 'ColdDrakeHuntM1_Hope1', 'ColdDrakeHuntM1_Hope2', 'ColdDrakeHuntM1_Hope3', 'ColdDrakeHuntM1_Threat1', 'ColdDrakeHuntM1_Threat2' },
 				Start = { PanischeNatter=1, WolfdesTals=1, AusgehungerterFalke={0,1,1,2}, Kaltdrachenjunges={0,0,1,1} },
 				Deck = 'Drachenspuren'
@@ -1376,7 +1377,7 @@ CAMPAIGNS = {
 			{	Missionsname = 'missionColdDrakeHunt3', Missionsbild = 'https://i.imgur.com/XPxzCW5.png',
 				Bedingungen = { victoryConditions={{minMod={'campaignVictory',1}}} },
 				Ereignisse = { 'ColdDrakeHuntM3_Hope1', 'ColdDrakeHuntM3_Hope2', 'ColdDrakeHuntM3_Hope3', 'ColdDrakeHuntM3_Threat1', 'ColdDrakeHuntM3_Threat2', 'ColdDrakeHuntM3_Threat3' },
-				Start = { },
+				Start = { Kaltdrachenjunges={1,2,2,3}, JugendlicherKaltdrache={1,1,2,2} },
 				Deck = 'Kaltdrachenzorn'
 			}
 		}
@@ -2490,9 +2491,9 @@ EVENTS = {
 	ColdDrakeHuntM3_Hope3 = {
 		hope=true, value=11, title='evColdDrakeClearLine', effectTargets={ctype='Held'}, effect={id='addEffect',effect={tr='Berechnung',id='bonus',a=1,Fernkampf=true,delete='Ende'}} },
 	ColdDrakeHuntM3_Threat1 = {
-		value=38, title='evColdDrakeBuffetingWings', targetPads={player='players'}, effect={id='handleEffects',effects={{id='setStance',stance='Normal',target='Charakter',targetAll=true,targetCondition={player='self',noStance='Normal'}},{id='exhaust',target='Charakter',randomTarget=true,targetCondition={player='self',ready=true}}}} },
+		value=37, title='evColdDrakeBuffetingWings', targetPads={player='players'}, effect={id='handleEffects',effects={{id='setStance',stance='Normal',target='Charakter',targetAll=true,targetCondition={player='self',noStance='Normal'}},{id='exhaust',target='Charakter',randomTarget=true,targetCondition={player='self',ready=true}}}} },
 	ColdDrakeHuntM3_Threat2 = {
-		value=44, title='evColdDrakeFrostOverAll', targetPads={player='players'}, effect={id='equipWithName',group='Vereist',target='Charakter',randomTarget=true,targetCondition={player='self',hasNotEquipmentTrait='Schatten'}} },
+		value=43, title='evColdDrakeFrostOverAll', targetPads={player='players'}, effect={id='equipWithName',group='Vereist',target='Charakter',randomTarget=true,targetCondition={player='self',hasNotEquipmentTrait='Schatten'}} },
 	ColdDrakeHuntM3_Threat3 = {
 		value=47, title='evColdDrakeFinalFrenzy', effectTargets={ctype='Schurke',trait='Drache'}, effect={id='addEffect',effect={tr='Angriffsende',id='surge',delete='Ende'}} },
 }

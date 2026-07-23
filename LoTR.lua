@@ -8310,7 +8310,7 @@ function getNameFromEffect(card,effect)
 		end
 		if effect.names or effect.group then
 			local cNames = {}
-			for _,name in ipairs(effect.names or NAME_GROUPS[effect.group]) do
+			for _,name in ipairs(effect.names or NAME_GROUPS[effect.group] or {}) do
 				if checkNameCondition(name,effect.nameCondition,card) then
 					table.insert(cNames,name)
 				end
@@ -8320,10 +8320,10 @@ function getNameFromEffect(card,effect)
 	elseif effect.ctype or effect.trait then
 		effect.nameCondition = {ctype = effect.ctype, trait=effect.trait}
 	end
-	return effect.name
-		or effect.names and getRandomElement(effect.names)
-		or effect.group and getRandomElement(NAME_GROUPS[effect.group])
-		or getRandomNameByCondition(card,effect.nameCondition)
+	if effect.name then return effect.name end
+	if effect.names then return getRandomElement(effect.names) end
+	if effect.group then return getRandomElement(NAME_GROUPS[effect.group] or {}) end
+	return getRandomNameByCondition(card,effect.nameCondition)
 end
 
 function getRandomNameByCondition(card,nameCondition)

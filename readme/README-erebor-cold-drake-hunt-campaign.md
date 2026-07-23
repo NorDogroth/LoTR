@@ -22,7 +22,7 @@ Diese Fassung ergänzt den Erebor-Zyklus um eine fünfte Kampagne mit drei Missi
 
 Missionsbild: `https://i.imgur.com/R6VPRdZ.png`
 
-Die Gruppe `Drachenzeichen` wird zu Kampagnenbeginn mit allen fünf Zeichen gefüllt. Ein zufälliges Zeichen wird herbeigerufen; jede aufgelöste Zeichenquest entfernt sich aus der Gruppe und ruft das nächste Zeichen.
+Die Gruppe `Drachenzeichen` wird zu Kampagnenbeginn mit allen fünf Zeichen gefüllt. Ein zufälliges Zeichen wird herbeigerufen; jede aufgelöste Zeichenquest erhöht den Zielzähler, entfernt sich aus der Gruppe und ruft – sofern noch vorhanden – das nächste Zeichen. Nach vier bewältigten Zeichen wird die Reise möglich; die fünfte Zeichenquest darf dabei noch im Spiel sein.
 
 Set: `Drachenspuren`
 
